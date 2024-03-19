@@ -3,25 +3,23 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
-  const article1 = await prisma.article.upsert({
+  const article1 = await prisma.product.upsert({
     where: { title: 'Title 1' },
     update: {},
     create: {
       title: 'Title 1',
-      body: 'Body1',
       description: 'Description1',
-      published: false,
-    },
+      price: 5.0,
   });
 
-  const article2 = await prisma.article.upsert({
+  const article2 = await prisma.product.upsert({
     where: { title: 'Title 2' },
     update: {},
     create: {
       title: 'Title 2',
-      body: 'Body2',
       description: 'Description2',
-      published: false,
+      price: 10.0,
+      
     },
   });
 

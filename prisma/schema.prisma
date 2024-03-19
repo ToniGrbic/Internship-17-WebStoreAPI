@@ -13,12 +13,35 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Article{
+model Rating{
+  id Int @id @default(autoincrement())
+  rating Float
+  count Int
+  product Product?
+}
+
+model Product{
   id Int @id @default(autoincrement())
   title String @unique
   description String?
-  body String
-  published Boolean @default(false)
+  image String? 
+  price Float
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  ratingId Int @unique
+  rating Rating @relation(fields: [ratingId], references: [id]) 
+  storeId Int
+  store Store @relation(fields: [storeId], references: [id])
 }
+
+model Store{
+  id Int @id @default(autoincrement())
+  name String @unique
+  image String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  products Product[]
+}
+
+
+  
