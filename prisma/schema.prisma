@@ -32,6 +32,43 @@ model Product{
   rating Rating @relation(fields: [ratingId], references: [id]) 
   storeId Int
   store Store @relation(fields: [storeId], references: [id])
+  cart Cart[]
+  orders Orders[]
+}
+
+model Cart {
+  id Int @id @default(autoincrement())
+  userId Int @unique
+  user User @relation(fields: [userId], references: [id])
+  productId Int
+  products Product[]
+  quantity Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Orders{
+  id Int @id @default(autoincrement())
+  userId Int
+  user User @relation(fields: [userId], references: [id])
+  productId Int
+  products Product[]
+  quantity Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model User{
+  id Int @id @default(autoincrement())
+  email String @unique
+  password String
+  name String
+  isAdmin Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  stores Store[]
+  orders Orders[]
+  cart Cart?
 }
 
 model Store{
@@ -41,7 +78,10 @@ model Store{
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   products Product[]
+  users User[]
 }
+
+
 
 
   
