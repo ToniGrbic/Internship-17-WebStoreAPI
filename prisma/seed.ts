@@ -29,6 +29,33 @@ async function main() {
     },
   });
 
+  const rating3 = await prisma.rating.upsert({
+    where: { id: 3 },
+    update: {},
+    create: {
+      rating: 4.3,
+      count: 15,
+    },
+  });
+
+  const rating4 = await prisma.rating.upsert({
+    where: { id: 4 },
+    update: {},
+    create: {
+      rating: 4.3,
+      count: 15,
+    },
+  });
+
+  const rating5 = await prisma.rating.upsert({
+    where: { id: 5 },
+    update: {},
+    create: {
+      rating: 4.3,
+      count: 15,
+    },
+  });
+
   const article1 = await prisma.product.upsert({
     where: { title: 'Title 1' },
     update: {},
