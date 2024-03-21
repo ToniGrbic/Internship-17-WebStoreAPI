@@ -33,7 +33,7 @@ model Product{
   storeId Int
   store Store @relation(fields: [storeId], references: [id])
   cart Cart[]
-  orders Orders[]
+  orders Order[]
 }
 
 model Cart {
@@ -47,7 +47,7 @@ model Cart {
   updatedAt DateTime @updatedAt
 }
 
-model Orders{
+model Order{
   id Int @id @default(autoincrement())
   userId Int
   user User @relation(fields: [userId], references: [id])
@@ -67,7 +67,7 @@ model User{
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   stores Store[]
-  orders Orders[]
+  orders Order[]
   cart Cart?
 }
 
