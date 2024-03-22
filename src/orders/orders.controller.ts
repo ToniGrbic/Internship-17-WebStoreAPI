@@ -36,6 +36,12 @@ export class OrdersController {
     return this.ordersService.findOne(+id);
   }
 
+  @Get('/user/:userId')
+  @ApiOkResponse({ type: OrderEntity, isArray: true })
+  findByUserId(@Param('userId') userId: string) {
+    return this.ordersService.findByUserId(+userId);
+  }
+
   @Patch(':id')
   @ApiCreatedResponse({ type: OrderEntity })
   update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
