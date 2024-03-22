@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -28,6 +29,12 @@ export class ProductsController {
   @ApiOkResponse({ type: ProductEntity, isArray: true })
   findAll() {
     return this.productsService.findAll();
+  }
+
+  @Get('search')
+  @ApiOkResponse({ type: ProductEntity, isArray: true })
+  findByName(@Query('title') title: string) {
+    return this.productsService.findByName(title);
   }
 
   @Get(':id')
