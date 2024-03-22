@@ -1,10 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Cart, Order } from '@prisma/client';
 
 export class CreateProductDto {
-  @ApiProperty()
-  id: number;
-
   @ApiProperty()
   title: string;
 
@@ -16,12 +12,6 @@ export class CreateProductDto {
 
   @ApiProperty()
   price: number;
-
-  @ApiProperty()
-  createdAt: string;
-
-  @ApiProperty()
-  updatedAt: string;
 
   @ApiProperty()
   ratingId: number;
