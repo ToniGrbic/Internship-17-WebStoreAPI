@@ -12,6 +12,9 @@ import { OrdersModule } from './orders/orders.module';
 import { CartsModule } from './carts/cart-items.module';
 import { CartItemsController } from './carts/cart-items.controller';
 import { CartItemsService } from './carts/cart-items.service';
+import { WishlistsModule } from './wishlists/wishlists.module';
+import { WishlistsController } from './wishlists/wishlists.controller';
+import { WishlistsService } from './wishlists/wishlists.service';
 
 @Module({
   imports: [
@@ -20,13 +23,21 @@ import { CartItemsService } from './carts/cart-items.service';
     UsersModule,
     OrdersModule,
     CartsModule,
+    WishlistsModule,
   ],
   controllers: [
     AppController,
     ProductsController,
     UsersController,
     CartItemsController,
+    WishlistsController,
   ],
-  providers: [AppService, ProductsService, UsersService, CartItemsService],
+  providers: [
+    AppService,
+    ProductsService,
+    UsersService,
+    CartItemsService,
+    WishlistsService,
+  ],
 })
 export class AppModule {}
