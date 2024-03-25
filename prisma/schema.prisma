@@ -14,13 +14,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Rating {
-  id      Int      @id @default(autoincrement())
-  rating  Float
-  count   Int
-  product Product?
-}
-
 model Product {
   id          Int            @id @default(autoincrement())
   title       String         @unique
@@ -29,9 +22,9 @@ model Product {
   price       Float
   createdAt   DateTime       @default(now())
   updatedAt   DateTime       @updatedAt
-  ratingId    Int            @unique
-  rating      Rating         @relation(fields: [ratingId], references: [id])
-  storeId     Int
+  rating      Float?         @default(0)
+  ratingCount Int?           @default(0)
+  storeId     Int            @default(1)
   store       Store          @relation(fields: [storeId], references: [id])
   cart        CartItem[]
   orders      Order[]
@@ -43,7 +36,7 @@ model CartItem {
   userId    Int
   user      User     @relation(fields: [userId], references: [id])
   productId Int
-  product   Product  @relation(fields: [productId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   quantity  Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -54,20 +47,20 @@ model WishListItem {
   userId    Int
   user      User     @relation(fields: [userId], references: [id])
   productId Int
-  product   Product  @relation(fields: [productId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Order {
-  id        Int       @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   userId    Int
-  user      User      @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
   productId Int
-  products  Product[]
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   quantity  Int
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model User {
