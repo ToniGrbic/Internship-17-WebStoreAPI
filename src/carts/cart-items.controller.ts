@@ -15,10 +15,10 @@ export class CartItemsController {
     return this.cartItemsService.create(createCartDto);
   }
 
-  @Get(':id')
+  @Get(':userId')
   @ApiOkResponse({ type: CartItemEntity, isArray: true })
-  findByUserId(@Param('id') id: string) {
-    return this.cartItemsService.findByUserId(+id);
+  findByUserId(@Param('userId') userId: string) {
+    return this.cartItemsService.findByUserId(+userId);
   }
 
   @Delete(':id')
