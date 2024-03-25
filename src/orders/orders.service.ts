@@ -12,13 +12,20 @@ export class OrdersService {
   }
 
   findAll() {
-    return this.prisma.order.findMany();
+    return this.prisma.order.findMany({
+      include: {
+        product: true,
+      },
+    });
   }
 
   findByUserId(userId: number) {
     return this.prisma.order.findMany({
       where: {
         userId,
+      },
+      include: {
+        product: true,
       },
     });
   }
