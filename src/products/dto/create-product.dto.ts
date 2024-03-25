@@ -14,7 +14,10 @@ export class CreateProductDto {
   price: number;
 
   @ApiProperty()
-  ratingId: number;
+  rating?: number;
+
+  @ApiProperty()
+  ratingCount?: number;
 
   @ApiProperty()
   storeId: number;
