@@ -20,11 +20,15 @@ export class ProductsService {
   }
 
   findByName(title: string) {
+    const words = title.split(' ');
+    // Search for products that contain all the words in the title
     return this.prisma.product.findMany({
       where: {
-        title: {
-          search: title,
-        },
+        AND: words.map((word) => ({
+          title: {
+            search: word,
+          },
+        })),
       },
     });
   }
