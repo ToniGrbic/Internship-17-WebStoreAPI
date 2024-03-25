@@ -24,7 +24,7 @@ model Product {
   updatedAt   DateTime       @updatedAt
   rating      Float?         @default(0)
   ratingCount Int?           @default(0)
-  storeId     Int            @default(1)
+  storeId     Int          
   store       Store          @relation(fields: [storeId], references: [id])
   cart        CartItem[]
   orders      Order[]
