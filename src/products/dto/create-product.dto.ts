@@ -19,6 +19,6 @@ export class CreateProductDto {
   @ApiProperty()
   ratingCount?: number;
 
-  @ApiProperty()
+  @ApiProperty({ default: 1 })
   storeId: number;
 }
