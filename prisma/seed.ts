@@ -54,7 +54,6 @@ async function main() {
     where: { email: 'tgrbic@gmail.com' },
     update: {},
     create: {
-      id: 1,
       email: 'tgrbic@gmail.com',
       name: 'Toni',
       password: '1234',
@@ -65,7 +64,6 @@ async function main() {
     where: { email: 'matematic@gmail.com' },
     update: {},
     create: {
-      id: 2,
       email: 'matematic@gmail.com',
       name: 'Mate',
       password: '123456',
@@ -76,7 +74,6 @@ async function main() {
     where: { id: 1 },
     update: {},
     create: {
-      id: 1,
       userId: 1,
       productId: 1,
       quantity: 2,
@@ -87,7 +84,6 @@ async function main() {
     where: { id: 2 },
     update: {},
     create: {
-      id: 2,
       userId: 1,
       productId: 2,
       quantity: 4,
@@ -98,7 +94,6 @@ async function main() {
     where: { id: 1 },
     update: {},
     create: {
-      id: 1,
       userId: 1,
       productId: 1,
     },
@@ -108,7 +103,6 @@ async function main() {
     where: { id: 2 },
     update: {},
     create: {
-      id: 2,
       userId: 1,
       productId: 2,
     },
@@ -118,7 +112,6 @@ async function main() {
     where: { id: 3 },
     update: {},
     create: {
-      id: 3,
       userId: 2,
       productId: 2,
     },
