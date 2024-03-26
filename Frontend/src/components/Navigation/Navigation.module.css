@@ -1,0 +1,27 @@
+.navigation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.search-input {
+  padding: 0.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  margin-right: 0.5rem;
+  max-width: 500px;
+}
+
+.search-button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  background-color: lightblue;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  &:hover {
+    background-color: #6dd4f6;
+  }
+}
