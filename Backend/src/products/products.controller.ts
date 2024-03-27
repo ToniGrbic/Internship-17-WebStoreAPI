@@ -19,7 +19,8 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { ProductEntity } from './entities/product.entity';
-import { UserAuthGuard } from 'src/users/user-auth.guard';
+import { UserAuthGuard } from 'src/users/guards/user-auth.guard';
+import { AdminAuthGuard } from 'src/users/guards/admin-auth.guard';
 
 @Controller('products')
 @ApiTags('products')
@@ -27,13 +28,13 @@ export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Post()
+  @ApiBearerAuth()
+  @UseGuards(AdminAuthGuard)
   @ApiCreatedResponse({ type: ProductEntity })
   create(@Body() createProductDto: CreateProductDto) {
     return this.productsService.create(createProductDto);
   }
 
-  @ApiBearerAuth()
-  @UseGuards(UserAuthGuard)
   @Get()
   @ApiOkResponse({ type: ProductEntity, isArray: true })
   findAll() {
@@ -53,12 +54,16 @@ export class ProductsController {
   }
 
   @Patch(':id')
+  @ApiBearerAuth()
+  @UseGuards(AdminAuthGuard)
   @ApiOkResponse({ type: ProductEntity })
   update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
     return this.productsService.update(+id, updateProductDto);
   }
 
   @Delete(':id')
+  @ApiBearerAuth()
+  @UseGuards(AdminAuthGuard)
   @ApiOkResponse({ type: ProductEntity })
   remove(@Param('id') id: string) {
     return this.productsService.remove(+id);

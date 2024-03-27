@@ -58,9 +58,9 @@ export class UsersService {
     const payload = {
       id: user.id,
       email: user.email,
-      isAdmin: false,
+      isAdmin: user.isAdmin,
     };
-    return { token: this.jwtService.sign(payload) };
+    return { token: this.jwtService.sign(payload), ...payload };
   }
 
   create(createUserDto: CreateUserDto) {
