@@ -7,12 +7,19 @@ import {
   Param,
   Delete,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { ProductEntity } from './entities/product.entity';
+import { UserAuthGuard } from 'src/users/user-auth.guard';
 
 @Controller('products')
 @ApiTags('products')
@@ -25,6 +32,8 @@ export class ProductsController {
     return this.productsService.create(createProductDto);
   }
 
+  @ApiBearerAuth()
+  @UseGuards(UserAuthGuard)
   @Get()
   @ApiOkResponse({ type: ProductEntity, isArray: true })
   findAll() {
