@@ -5,8 +5,6 @@ import { PrismaModule } from 'src/prisma/prisma.module';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './jwt.strategy';
 
-console.log(process.env.JWT_SECRET);
-
 @Module({
   controllers: [UsersController],
   providers: [UsersService, JwtStrategy],
