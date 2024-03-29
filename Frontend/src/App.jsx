@@ -1,44 +1,16 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Navigation from "./components/Navigation";
 import HomePage from "./pages/HomePage";
 import Product from "./pages/Product";
 import Products from "./pages/Products";
 import NotFound from "./pages/NotFound";
+import useFetchProducts from "./pages/hooks/useFetchProducts";
 
 function App() {
-  const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState([]);
   const [search, setSearch] = useState("");
-
-  const [isLoading, setLoading] = useState(true);
-  const [isError, setError] = useState(false);
-  const url = "https://fakestoreapi.com/products";
-
-  const getCategories = (products) => {
-    const categories = products.reduce((acc, product) => {
-      if (!acc.includes(product.category)) acc.push(product.category);
-      return acc;
-    }, []);
-    return categories;
-  };
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const response = await fetch(url);
-        const products = await response.json();
-        setProducts(products);
-
-        const categories = getCategories(products);
-        setCategories(["All", ...categories]);
-        setLoading(false);
-      } catch (error) {
-        setError(true);
-      }
-    })();
-  }, []);
+  const { products, categories, isLoading, isError } = useFetchProducts();
 
   return (
     <Routes>
@@ -60,6 +32,7 @@ function App() {
               products={products}
               categories={categories}
               search={search}
+              setSearch={setSearch}
             />
           }
         />
