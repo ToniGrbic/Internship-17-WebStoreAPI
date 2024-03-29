@@ -3,15 +3,18 @@ import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import ProductCard from "../../components/ProductCard";
 import styles from "./Products.module.css";
+import useFetchProducts from "../hooks/useFetchProducts";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
-const Products = ({ products, categories, search }) => {
+const Products = ({ search }) => {
   const [categoryFilter, setCategoryFilter] = useState("All");
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [_, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { products, categories, isLoading, isError } = useFetchProducts();
 
-  const filterProducts = (products, searchTerm) => {
+  const filterProducts = (searchTerm) => {
     return products.filter((product) => {
-      const containsTilte = product.title
+      const containsTitle = product.title
         .toLowerCase()
         .includes(searchTerm.toLowerCase());
 
@@ -19,14 +22,17 @@ const Products = ({ products, categories, search }) => {
         categoryFilter === "All" || product.category === categoryFilter;
 
       if (searchTerm === "") return containsCategory;
-      return containsTilte && containsCategory;
+      return containsTitle && containsCategory;
     });
   };
 
   useEffect(() => {
-    setSearchParams({ search });
-    setFilteredProducts(filterProducts(products, search));
-  }, [search, categoryFilter]);
+    const searchQuery = searchParams.get("search");
+    const searchTerm = searchQuery || search;
+
+    setSearchParams({ search: searchTerm });
+    setFilteredProducts(filterProducts(searchTerm));
+  }, [products, search, categoryFilter]);
 
   return (
     <div>
@@ -48,9 +54,13 @@ const Products = ({ products, categories, search }) => {
         })}
       </div>
       <div className={styles["products-container"]}>
-        {filteredProducts.map((product) => {
-          return <ProductCard key={product.id} product={product} />;
-        })}
+        {isLoading ? (
+          <LoadingSpinner />
+        ) : (
+          filteredProducts.map((product) => {
+            return <ProductCard key={product.id} product={product} />;
+          })
+        )}
       </div>
     </div>
   );
