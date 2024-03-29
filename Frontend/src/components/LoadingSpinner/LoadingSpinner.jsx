@@ -3,10 +3,13 @@ import styles from "./LoadingSpinner.module.css";
 
 const LoadingSpinner = () => {
   return (
-    <div className={styles["lds-facebook"]}>
-      <div></div>
-      <div></div>
-      <div></div>
+    <div>
+      <h2 className={styles["loading-text"]}>Loading...</h2>
+      <div className={styles["lds-facebook"]}>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
     </div>
   );
 };

@@ -18,10 +18,7 @@ const HomePage = ({ products, isLoading, isError }) => {
       <h2>All Products:</h2>
       <div className={styles["products-container"]}>
         {isLoading ? (
-          <div>
-            <h2 className={styles["loading-text"]}>Loading...</h2>
-            <LoadingSpinner />
-          </div>
+          <LoadingSpinner />
         ) : (
           products.map((product) => {
             return <ProductCard key={product.id} product={product} />;
