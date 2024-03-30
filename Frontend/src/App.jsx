@@ -6,7 +6,7 @@ import HomePage from "./pages/HomePage";
 import Product from "./pages/Product";
 import Products from "./pages/Products";
 import NotFound from "./pages/NotFound";
-import useFetchProducts from "./pages/hooks/useFetchProducts";
+import useFetchProducts from "./hooks/useFetchProducts";
 
 function App() {
   const [search, setSearch] = useState("");

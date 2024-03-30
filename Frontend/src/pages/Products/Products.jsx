@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import ProductCard from "../../components/ProductCard";
 import styles from "./Products.module.css";
-import useFetchProducts from "../hooks/useFetchProducts";
+import useFetchProducts from "../../hooks/useFetchProducts";
 import LoadingSpinner from "../../components/LoadingSpinner";
 
 const Products = ({ search }) => {
