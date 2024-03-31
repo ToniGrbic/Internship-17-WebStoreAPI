@@ -9,6 +9,7 @@ import NotFound from "./pages/NotFound";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import useFetchProducts from "./hooks/useFetchProducts";
+import AuthLayout from "./components/AuthLayout";
 
 function App() {
   const [search, setSearch] = useState("");
@@ -43,8 +44,10 @@ function App() {
           element={<Product products={products} />}
         />
       </Route>
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
+      <Route element={<AuthLayout />}>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
