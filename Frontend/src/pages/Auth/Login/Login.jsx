@@ -28,7 +28,7 @@ const Login = () => {
         <TextInput
           placeholder="Password"
           value={password}
-          setPassword={setPassword}
+          setValue={setPassword}
           type="password"
         />
         <button className={styles["button"]} type="submit">
