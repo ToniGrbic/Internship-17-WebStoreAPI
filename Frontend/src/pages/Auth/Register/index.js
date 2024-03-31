@@ -1,3 +1,3 @@
 import Register from "./Register";
 
-export default index;
+export default Register;
