@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import styles from "./Navigation.module.css";
+import TextInput from "../Inputs/TextInput";
 
 const Navigation = ({ setSearch }) => {
   const navigate = useNavigate();
@@ -15,18 +16,25 @@ const Navigation = ({ setSearch }) => {
   return (
     <>
       <div className={styles.navigation}>
+        <h2 className={styles["navigation-title"]}>E-commerce</h2>
         <form onSubmit={handleSubmit}>
-          <input
-            className={styles["search-input"]}
-            type="text"
+          <TextInput
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            setValue={setSearchTerm}
             placeholder="Search..."
           />
-          <button className={styles["search-button"]} type="submit">
+          <button className={styles["button"]} type="submit">
             Search
           </button>
         </form>
+        <div className={styles["navigation-auth"]}>
+          <button
+            className={styles["button"]}
+            onClick={() => navigate("/login")}
+          >
+            Sign in
+          </button>
+        </div>
       </div>
       <Outlet />
     </>
