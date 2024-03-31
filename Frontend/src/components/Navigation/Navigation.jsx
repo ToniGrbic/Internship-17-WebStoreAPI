@@ -7,7 +7,7 @@ const Navigation = ({ setSearch }) => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setSearch(searchTerm);
     navigate("/products");

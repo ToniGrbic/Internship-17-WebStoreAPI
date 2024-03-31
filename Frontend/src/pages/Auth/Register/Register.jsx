@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styles from "../index.module.css";
 import TextInput from "../../../components/Inputs/TextInput";
 import { useNavigate } from "react-router";
+import toast from "react-hot-toast";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -12,15 +13,18 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!email || !password || !confirmPassword) {
+      toast.error("Please fill all fields!");
       return;
     }
     if (password !== confirmPassword) {
+      toast.error("Passwords do not match!");
       return;
     }
 
     setEmail("");
     setPassword("");
     setConfirmPassword("");
+    toast.success("Account created successfully!");
   };
   return (
     <>
@@ -30,13 +34,13 @@ const Register = () => {
         <TextInput
           placeholder="Password"
           value={password}
-          setPassword={setPassword}
+          setValue={setPassword}
           type="password"
         />
         <TextInput
           placeholder="Confirm Password"
           value={confirmPassword}
-          setPassword={setConfirmPassword}
+          setValue={setConfirmPassword}
           type="password"
         />
         <button className={styles["button"]} type="submit">

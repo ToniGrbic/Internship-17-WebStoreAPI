@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styles from "../index.module.css";
 import TextInput from "../../../components/Inputs/TextInput";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -10,8 +11,13 @@ const Login = () => {
   const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!email || !password) {
+      toast.error("Please fill all fields!");
+      return;
+    }
     setEmail("");
     setPassword("");
+    toast.success("Logged in successfully!");
   };
 
   return (
