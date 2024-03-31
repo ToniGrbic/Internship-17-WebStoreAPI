@@ -6,6 +6,8 @@ import HomePage from "./pages/HomePage";
 import Product from "./pages/Product";
 import Products from "./pages/Products";
 import NotFound from "./pages/NotFound";
+import Login from "./pages/Auth/Login";
+import Register from "./pages/Auth/Register";
 import useFetchProducts from "./hooks/useFetchProducts";
 
 function App() {
@@ -40,8 +42,10 @@ function App() {
           path="/product/:productId"
           element={<Product products={products} />}
         />
-        <Route path="*" element={<NotFound />} />
       </Route>
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }
