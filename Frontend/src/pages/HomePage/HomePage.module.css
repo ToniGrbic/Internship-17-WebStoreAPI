@@ -5,6 +5,13 @@
   margin-top: 2rem;
 }
 
+.home-title-container {
+  margin: 0 1rem;
+  & h1 {
+    text-align: center;
+  }
+}
+
 .products-container {
   display: flex;
   flex-wrap: wrap;

@@ -10,11 +10,14 @@ const HomePage = ({ products, isLoading, isError }) => {
 
   return (
     <div className={styles["home-container"]}>
-      <h1>Welcome to the home page!</h1>
-      <p>
-        This is a simple e-commerce site. Search for a product to navigate to
-        the products page where you can also filter by category.
-      </p>
+      <div className={styles["home-title-container"]}>
+        <h1>Welcome to the home page!</h1>
+        <p>
+          This is a simple e-commerce site. Search for a product to navigate to
+          the products page where you can also filter by category.
+        </p>
+      </div>
+
       <h2>All Products:</h2>
       <div className={styles["products-container"]}>
         {isLoading ? (
