@@ -16,7 +16,7 @@ const Navigation = ({ setSearch }) => {
   return (
     <>
       <div className={styles.navigation}>
-        <h2 className={styles["navigation-title"]}>E-commerce</h2>
+        <h2 className={styles["navigation-title"]}>Webstore</h2>
         <form onSubmit={handleSubmit}>
           <TextInput
             value={searchTerm}

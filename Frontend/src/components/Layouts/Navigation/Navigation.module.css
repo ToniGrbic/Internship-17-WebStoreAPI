@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 1.5rem;
+  padding: 1.5rem;
   border-bottom: 1px solid #e0e0e0;
   background-color: white;
 }
@@ -23,4 +23,15 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+}
+
+h2.navigation-title {
+  display: block;
+  margin: 0;
+}
+
+@media screen and (max-width: 560px) {
+  h2.navigation-title {
+    display: none;
+  }
 }
