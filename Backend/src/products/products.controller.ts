@@ -8,6 +8,7 @@ import {
   Delete,
   Query,
   UseGuards,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -19,7 +20,6 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { ProductEntity } from './entities/product.entity';
-import { UserAuthGuard } from 'src/users/guards/user-auth.guard';
 import { AdminAuthGuard } from 'src/users/guards/admin-auth.guard';
 
 @Controller('products')
@@ -49,23 +49,26 @@ export class ProductsController {
 
   @Get(':id')
   @ApiOkResponse({ type: ProductEntity })
-  findOne(@Param('id') id: string) {
-    return this.productsService.findOne(+id);
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.productsService.findOne(id);
   }
 
   @Patch(':id')
   @ApiBearerAuth()
   @UseGuards(AdminAuthGuard)
   @ApiOkResponse({ type: ProductEntity })
-  update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
-    return this.productsService.update(+id, updateProductDto);
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateProductDto: UpdateProductDto,
+  ) {
+    return this.productsService.update(id, updateProductDto);
   }
 
   @Delete(':id')
   @ApiBearerAuth()
   @UseGuards(AdminAuthGuard)
   @ApiOkResponse({ type: ProductEntity })
-  remove(@Param('id') id: string) {
-    return this.productsService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.productsService.remove(id);
   }
 }

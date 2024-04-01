@@ -7,16 +7,8 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class OrdersService {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(createOrderDto: CreateOrderDto) {
-    return this.prisma.order.create({ data: createOrderDto });
-  }
-
-  findAll() {
-    return this.prisma.order.findMany({
-      include: {
-        product: true,
-      },
-    });
+  create(userId: number, createOrderDto: CreateOrderDto) {
+    return this.prisma.order.create({ data: { userId, ...createOrderDto } });
   }
 
   findByUserId(userId: number) {

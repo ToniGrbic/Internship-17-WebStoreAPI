@@ -6,6 +6,8 @@ import {
   Param,
   Delete,
   UseGuards,
+  ParseIntPipe,
+  Req,
 } from '@nestjs/common';
 import { CartItemsService } from './cart-items.service';
 import { CreateCartItemDto } from './dto/create-cart-item.dto';
@@ -13,6 +15,7 @@ import { ApiTags, ApiOkResponse, ApiCreatedResponse } from '@nestjs/swagger';
 import { CartItemEntity } from './entities/cart.entity';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { UserAuthGuard } from 'src/users/guards/user-auth.guard';
+import { AdminAuthGuard } from 'src/users/guards/admin-auth.guard';
 
 @Controller('cart-items')
 @ApiTags('cart items')
@@ -23,21 +26,28 @@ export class CartItemsController {
   @Post()
   @UseGuards(UserAuthGuard)
   @ApiCreatedResponse({ type: CartItemEntity })
-  create(@Body() createCartDto: CreateCartItemDto) {
-    return this.cartItemsService.create(createCartDto);
+  create(@Req() { user }, @Body() createCartDto: CreateCartItemDto) {
+    return this.cartItemsService.create(user.id, createCartDto);
+  }
+
+  @Get()
+  @UseGuards(UserAuthGuard)
+  @ApiOkResponse({ type: CartItemEntity, isArray: true })
+  findUserCart(@Req() { user }) {
+    return this.cartItemsService.findByUserId(user.id);
   }
 
   @Get(':userId')
-  @UseGuards(UserAuthGuard)
+  @UseGuards(AdminAuthGuard)
   @ApiOkResponse({ type: CartItemEntity, isArray: true })
-  findByUserId(@Param('userId') userId: string) {
-    return this.cartItemsService.findByUserId(+userId);
+  findByUserId(@Param('userId', ParseIntPipe) userId: number) {
+    return this.cartItemsService.findByUserId(userId);
   }
 
   @Delete(':id')
   @UseGuards(UserAuthGuard)
   @ApiCreatedResponse({ type: CartItemEntity })
-  remove(@Param('id') id: string) {
-    return this.cartItemsService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.cartItemsService.remove(id);
   }
 }

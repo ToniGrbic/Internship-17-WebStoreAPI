@@ -6,14 +6,10 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class WishlistsService {
   constructor(private prisma: PrismaService) {}
 
-  create(createWishlistDto: CreateWishlistDto) {
+  create(userId: number, createWishlistDto: CreateWishlistDto) {
     return this.prisma.wishListItem.create({
-      data: createWishlistDto,
+      data: { userId, ...createWishlistDto },
     });
-  }
-
-  findAll() {
-    return this.prisma.wishListItem.findMany();
   }
 
   findByUserId(userId: number) {

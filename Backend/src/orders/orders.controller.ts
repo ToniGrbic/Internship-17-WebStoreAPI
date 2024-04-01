@@ -6,6 +6,8 @@ import {
   Patch,
   Param,
   Delete,
+  ParseIntPipe,
+  Req,
 } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';
@@ -23,50 +25,51 @@ import { UseGuards } from '@nestjs/common';
 
 @Controller('orders')
 @ApiTags('orders')
+@ApiBearerAuth()
 export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 
   @Post()
-  @ApiBearerAuth()
   @UseGuards(UserAuthGuard)
   @ApiCreatedResponse({ type: OrderEntity })
-  create(@Body() createOrderDto: CreateOrderDto) {
-    return this.ordersService.create(createOrderDto);
+  create(@Req() { user }, @Body() createOrderDto: CreateOrderDto) {
+    return this.ordersService.create(user.id, createOrderDto);
   }
 
   @Get()
-  @ApiBearerAuth()
+  @UseGuards(UserAuthGuard)
+  @ApiOkResponse({ type: OrderEntity, isArray: true })
+  findUserOrders(@Req() { user }) {
+    return this.ordersService.findByUserId(user.id);
+  }
+
+  @Get('/:userId')
   @UseGuards(AdminAuthGuard)
   @ApiOkResponse({ type: OrderEntity, isArray: true })
-  findAll() {
-    return this.ordersService.findAll();
+  findByUserId(@Param('userId', ParseIntPipe) userId: number) {
+    return this.ordersService.findByUserId(userId);
   }
 
   @Get(':id')
-  @ApiBearerAuth()
   @UseGuards(AdminAuthGuard)
   @ApiOkResponse({ type: OrderEntity })
-  findOne(@Param('id') id: string) {
-    return this.ordersService.findOne(+id);
-  }
-
-  @Get('/user/:userId')
-  @ApiOkResponse({ type: OrderEntity, isArray: true })
-  findByUserId(@Param('userId') userId: string) {
-    return this.ordersService.findByUserId(+userId);
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.ordersService.findOne(id);
   }
 
   @Patch(':id')
-  @ApiBearerAuth()
   @UseGuards(AdminAuthGuard)
   @ApiCreatedResponse({ type: OrderEntity })
-  update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
-    return this.ordersService.update(+id, updateOrderDto);
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateOrderDto: UpdateOrderDto,
+  ) {
+    return this.ordersService.update(id, updateOrderDto);
   }
 
   @Delete(':id')
   @ApiOkResponse({ type: OrderEntity })
-  remove(@Param('id') id: string) {
-    return this.ordersService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.ordersService.remove(id);
   }
 }
