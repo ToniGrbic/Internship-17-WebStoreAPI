@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import styles from "./Navigation.module.css";
-import TextInput from "../Inputs/TextInput";
+import TextInput from "../../Inputs/TextInput";
 
 const Navigation = ({ setSearch }) => {
   const navigate = useNavigate();

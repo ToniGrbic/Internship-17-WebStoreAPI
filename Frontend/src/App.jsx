@@ -1,7 +1,7 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import { useState } from "react";
-import Navigation from "./components/Navigation";
+import Navigation from "./components/Layouts/Navigation";
 import HomePage from "./pages/HomePage";
 import Product from "./pages/Product";
 import Products from "./pages/Products";
@@ -9,7 +9,7 @@ import NotFound from "./pages/NotFound";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import useFetchProducts from "./hooks/useFetchProducts";
-import AuthLayout from "./components/AuthLayout";
+import AuthLayout from "./components/Layouts/AuthLayout";
 
 function App() {
   const [search, setSearch] = useState("");
