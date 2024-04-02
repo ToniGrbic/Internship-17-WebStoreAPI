@@ -7,11 +7,24 @@
   background-color: white;
 }
 
-.button {
+.button-search {
+  padding: 0.43rem 1rem;
+  border: none;
+  border-top-right-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+  background: lightblue;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  &:hover {
+    background-color: #6dd4f6;
+  }
+}
+
+.button-auth {
   padding: 0.5rem 1rem;
   border: none;
   border-radius: 0.5rem;
-  background-color: lightblue;
+  background: lightblue;
   cursor: pointer;
   transition: all 0.3s ease;
   &:hover {

@@ -1,7 +1,12 @@
 import React, { useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
 import styles from "./Navigation.module.css";
+import { Outlet, useNavigate } from "react-router-dom";
+import { useUser } from "../../../providers/UserProvider/UserProvider";
+import { useCartContext } from "../../../providers/CartProvider/CartProvider";
+import { AiOutlineShopping } from "react-icons/ai";
+import { CiSearch } from "react-icons/ci";
 import TextInput from "../../Inputs/TextInput";
+import Cart from "../../Cart";
 
 const Navigation = ({ setSearch }) => {
   const navigate = useNavigate();
@@ -13,6 +18,8 @@ const Navigation = ({ setSearch }) => {
     navigate("/products");
   };
 
+  const { isLoggedIn, setIsLoggedIn } = useUser();
+  const { setShowCart, totalQuantities, showCart } = useCartContext();
   return (
     <>
       <div className={styles.navigation}>
@@ -23,17 +30,35 @@ const Navigation = ({ setSearch }) => {
             setValue={setSearchTerm}
             placeholder="Search..."
           />
-          <button className={styles["button"]} type="submit">
-            Search
+          <button className={styles["button-search"]} type="submit">
+            <CiSearch />
           </button>
         </form>
         <div className={styles["navigation-auth"]}>
           <button
-            className={styles["button"]}
-            onClick={() => navigate("/login")}
+            className="cart-icon"
+            type="button"
+            onClick={() => setShowCart((prev) => !prev)}
           >
-            Sign in
+            <AiOutlineShopping />
+            <span className="cart-item-qty">{totalQuantities}</span>
           </button>
+          {showCart && <Cart />}
+          {!isLoggedIn ? (
+            <button
+              className={styles["button-auth"]}
+              onClick={() => navigate("/login")}
+            >
+              Sign in
+            </button>
+          ) : (
+            <button
+              className={styles["button-auth"]}
+              onClick={() => setIsLoggedIn(false)}
+            >
+              Logout
+            </button>
+          )}
         </div>
       </div>
       <Outlet />
