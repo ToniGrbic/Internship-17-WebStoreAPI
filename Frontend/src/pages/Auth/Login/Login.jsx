@@ -1,12 +1,14 @@
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import styles from "../index.module.css";
 import TextInput from "../../../components/Inputs/TextInput";
 import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
+import { useUser } from "../../../providers/UserProvider/UserProvider";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { setIsLoggedIn } = useUser();
 
   const navigate = useNavigate();
   const handleSubmit = (e) => {
@@ -17,7 +19,9 @@ const Login = () => {
     }
     setEmail("");
     setPassword("");
+    setIsLoggedIn(true);
     toast.success("Logged in successfully!");
+    navigate("/");
   };
 
   return (
