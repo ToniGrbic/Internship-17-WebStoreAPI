@@ -77,8 +77,8 @@ const Cart = () => {
                   />
                   <div className={styles["item-desc"]}>
                     <div className={`${styles["flex"]} ${styles["top"]}`}>
-                      <h5>{item.title}$</h5>
-                      <h4>{item.price}</h4>
+                      <h5>{item.title}</h5>
+                      <h4>${item.price}</h4>
                     </div>
                     <div className={`${styles["flex"]} ${styles["bottom"]}`}>
                       <div>
@@ -112,13 +112,17 @@ const Cart = () => {
             })}
         </div>
         {cartItems.length >= 1 && (
-          <div className="cart-bottom">
-            <div className="total">
+          <div className={styles["cart-bottom"]}>
+            <div className={styles["total"]}>
               <h3>Subtotal:</h3>
               <h3>${totalPrice.toFixed(2)}</h3>
             </div>
-            <div className="btn-container">
-              <button className="btn" type="button" onClick={handleCheckout}>
+            <div className={styles["btn-container"]}>
+              <button
+                className={styles["btn"]}
+                type="button"
+                onClick={handleCheckout}
+              >
                 Buy
               </button>
             </div>

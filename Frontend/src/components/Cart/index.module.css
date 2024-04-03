@@ -58,7 +58,9 @@
 
 .product-container {
   margin-top: 15px;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+
   max-height: 70vh;
   padding: 20px 10px;
 }
@@ -68,8 +70,8 @@
   padding: 20px;
 }
 .product .cart-product-image {
-  width: 180px;
-  height: 150px;
+  width: 140px;
+  height: 200px;
   border-radius: 15px;
   background-color: #ebebeb;
 }
@@ -85,7 +87,7 @@
 }
 
 .flex h5 {
-  font-size: 24px;
+  font-size: 18px;
 }
 .flex h4 {
   font-size: 20px;
@@ -131,11 +133,8 @@ h5 {
 }
 
 .cart-bottom {
-  position: absolute;
-  bottom: 12px;
-  right: 5px;
   width: 100%;
-  padding: 30px 65px;
+  padding: 0 1rem 1rem 1rem;
 }
 
 .btn-container {
@@ -149,15 +148,89 @@ h5 {
   border-radius: 15px;
   border: none;
   font-size: 20px;
-  margin-top: 10px;
-  margin-top: 40px;
   text-transform: uppercase;
-  background-color: #f02d34;
-  color: #fff;
+  background-color: lightblue;
+  color: black;
   cursor: pointer;
   transform: scale(1, 1);
   transition: transform 0.5s ease;
 }
 .btn:hover {
   transform: scale(1.1, 1.1);
+}
+
+@media screen and (max-width: 800px) {
+  .cart-container {
+    width: 415px;
+    padding: 4px;
+  }
+  .cart-heading {
+    margin-top: 35px;
+  }
+  .product-container {
+    margin-top: 10px;
+  }
+  .product {
+    padding: 20px 5px;
+  }
+  .product .cart-product-image {
+    width: 25%;
+    height: 25%;
+  }
+  .buttons .add-to-cart {
+    width: 150px;
+  }
+  .buttons .buy-now {
+    width: 150px;
+  }
+  .product-detail-container {
+    margin: 20px;
+  }
+
+  .item-desc .flex {
+    width: 200px;
+  }
+  .top {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .item-desc .bottom {
+    margin-top: 30px;
+  }
+  .flex h5 {
+    font-size: 16px;
+    color: var(--clr-color);
+  }
+  .flex h4 {
+    font-size: 16px;
+    color: var(--clr-color);
+  }
+  .cart-bottom {
+    padding: 30px;
+  }
+
+  .total h3 {
+    font-size: 20px;
+  }
+  .success-wrapper,
+  .cancel-wrapper {
+    background-color: var(--clr-bcg);
+    min-height: 69vh;
+  }
+  .success,
+  .cancel {
+    width: 370px;
+    margin-top: 100px;
+    padding: 20px;
+  }
+  .success {
+    height: 350px;
+  }
+  .success h2 {
+    font-size: 17px;
+  }
+  .btn-container {
+    width: 300px;
+    margin: auto;
+  }
 }
