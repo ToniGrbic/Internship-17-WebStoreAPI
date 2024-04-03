@@ -68,6 +68,18 @@ h2.navigation-title {
   font-weight: 600;
 }
 
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+
+  & img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
+}
+
 @media screen and (max-width: 560px) {
   h2.navigation-title {
     display: none;

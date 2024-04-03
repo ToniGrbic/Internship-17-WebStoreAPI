@@ -5,12 +5,15 @@ import { useUser } from "../../../providers/UserProvider/UserProvider";
 import { useCartContext } from "../../../providers/CartProvider/CartProvider";
 import { AiOutlineShopping } from "react-icons/ai";
 import { CiSearch } from "react-icons/ci";
+import defaultAvatar from "../../../assets/default-avatar.jpg";
 import TextInput from "../../Inputs/TextInput";
+import Dropdown from "../../Dropdown";
 import Cart from "../../Cart";
 
 const Navigation = ({ setSearch }) => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
+  const [showDropdown, setShowDropdown] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -18,7 +21,7 @@ const Navigation = ({ setSearch }) => {
     navigate("/products");
   };
 
-  const { isLoggedIn, setIsLoggedIn } = useUser();
+  const { isLoggedIn } = useUser();
   const { setShowCart, totalQuantities, showCart } = useCartContext();
   return (
     <>
@@ -52,12 +55,16 @@ const Navigation = ({ setSearch }) => {
               Sign in
             </button>
           ) : (
-            <button
-              className={styles["button-auth"]}
-              onClick={() => setIsLoggedIn(false)}
+            <div
+              onMouseEnter={() => setShowDropdown(true)}
+              className={styles["user-avatar"]}
             >
-              Logout
-            </button>
+              <img src={defaultAvatar} alt="avatar" />
+              <Dropdown
+                setShowDropdown={setShowDropdown}
+                showDropdown={showDropdown}
+              />
+            </div>
           )}
         </div>
       </div>
