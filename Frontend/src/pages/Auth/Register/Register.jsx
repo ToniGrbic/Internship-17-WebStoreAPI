@@ -25,6 +25,7 @@ const Register = () => {
     setPassword("");
     setConfirmPassword("");
     toast.success("Account created successfully!");
+    navigate("/login");
   };
   return (
     <>
