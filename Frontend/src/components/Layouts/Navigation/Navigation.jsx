@@ -36,12 +36,12 @@ const Navigation = ({ setSearch }) => {
         </form>
         <div className={styles["navigation-auth"]}>
           <button
-            className="cart-icon"
+            className={styles["cart-icon"]}
             type="button"
             onClick={() => setShowCart((prev) => !prev)}
           >
             <AiOutlineShopping />
-            <span className="cart-item-qty">{totalQuantities}</span>
+            <span className={styles["cart-item-qty"]}>{totalQuantities}</span>
           </button>
           {showCart && <Cart />}
           {!isLoggedIn ? (
