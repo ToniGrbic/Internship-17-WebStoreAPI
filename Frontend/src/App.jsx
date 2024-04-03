@@ -8,6 +8,8 @@ import Products from "./pages/Products";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
+import Orders from "./pages/Orders";
+import Wishlist from "./pages/Wishlist";
 import useFetchProducts from "./hooks/useFetchProducts";
 import AuthLayout from "./components/Layouts/AuthLayout";
 
@@ -43,6 +45,8 @@ function App() {
           path="/product/:productId"
           element={<Product products={products} />}
         />
+        <Route path="/orders" element={<Orders />} />
+        <Route path="/wishlist" element={<Wishlist />} />
       </Route>
       <Route element={<AuthLayout />}>
         <Route path="/login" element={<Login />} />
