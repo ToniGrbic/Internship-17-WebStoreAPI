@@ -3,14 +3,13 @@ import styles from "./index.module.css";
 import { useUser } from "../../providers/UserProvider/UserProvider";
 import { useNavigate } from "react-router-dom";
 
-const Dropdown = ({ showDropdown, setShowDropdown }) => {
+const Dropdown = ({ showDropdown }) => {
   const { setIsLoggedIn } = useUser();
   const navigate = useNavigate();
   return (
     <div
       style={showDropdown ? { display: "flex" } : {}}
       className={styles["user-dropdown"]}
-      onMouseLeave={() => setShowDropdown(false)}
     >
       <button
         className={styles["button-auth"]}

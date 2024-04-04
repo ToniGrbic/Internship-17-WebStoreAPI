@@ -57,13 +57,11 @@ const Navigation = ({ setSearch }) => {
           ) : (
             <div
               onMouseEnter={() => setShowDropdown(true)}
+              onMouseLeave={() => setShowDropdown(false)}
               className={styles["user-avatar"]}
             >
               <img src={defaultAvatar} alt="avatar" />
-              <Dropdown
-                setShowDropdown={setShowDropdown}
-                showDropdown={showDropdown}
-              />
+              <Dropdown showDropdown={showDropdown} />
             </div>
           )}
         </div>
