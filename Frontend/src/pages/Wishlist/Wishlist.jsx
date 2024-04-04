@@ -1,16 +1,16 @@
 import React from "react";
 import styles from "./index.module.css";
-import useFetchProducts from "../../hooks/useFetchProducts";
+import { useUser } from "../../providers/UserProvider/UserProvider";
 import { useNavigate } from "react-router-dom";
 
 const Wishlist = () => {
-  const { products } = useFetchProducts();
+  const { wishlist } = useUser();
   const navigate = useNavigate();
 
   return (
     <div className={styles["wishlist-container"]}>
       <h1>Wishlist</h1>
-      {products.map((product) => {
+      {wishlist.map((product) => {
         return (
           <div
             className={styles["wishlist-item-container"]}
