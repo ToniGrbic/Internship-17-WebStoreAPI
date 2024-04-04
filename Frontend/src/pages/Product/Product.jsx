@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useCartContext } from "../../providers/CartProvider/CartProvider";
+import { useUser } from "../../providers/UserProvider/UserProvider";
 import styles from "./Product.module.css";
 import ProductCard from "../../components/ProductCard";
-import { useUser } from "../../providers/UserProvider/UserProvider";
 
 const Product = ({ products }) => {
-  const location = useLocation();
-  const product = location?.state;
+  const { state: product } = useLocation();
   const [otherProducts, setOtherProducts] = useState([]);
 
   const { isProductInCart, onRemove, addToCart } = useCartContext();
@@ -20,8 +19,8 @@ const Product = ({ products }) => {
     setOtherProducts(otherProducts);
   }, [product, products]);
 
-  const handleCartClick = (id) => {
-    if (isProductInCart(id)) onRemove(id);
+  const handleCartClick = () => {
+    if (isProductInCart(product.id)) onRemove(product.id);
     else addToCart(product, 1);
   };
 
@@ -44,14 +43,11 @@ const Product = ({ products }) => {
               <p>Price: ${product.price}</p>
               <p>{product.description}</p>
               <div className={styles["buttons-container"]}>
-                <button
-                  className={styles["button"]}
-                  onClick={() => handleCartClick(product.id)}
-                >
+                <button className={styles["button"]} onClick={handleCartClick}>
                   {isProductInCart(product.id) ? "In Cart" : "Add to Cart"}
                 </button>
                 <button
-                  onClick={() => handleWishlistClick()}
+                  onClick={handleWishlistClick}
                   className={styles["button"]}
                 >
                   {isOnWishlist(product.id) ? "In Wishlist" : "Add to Wishlist"}
