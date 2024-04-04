@@ -15,6 +15,7 @@ const Context = createContext({
   setCartItems: () => {},
   setTotalPrice: () => {},
   setTotalQuantities: () => {},
+  isProductInCart: () => {},
 });
 
 const CartProvider = ({ children }) => {
@@ -46,33 +47,38 @@ const CartProvider = ({ children }) => {
       const newItem = { ...product, quantity };
       setCartItems([...cartItems, newItem]);
     }
-    toast.success(`${qty} ${product.name} added to cart`);
+    toast.success(`${qty} ${product.title} added to cart`);
   };
 
   const toggleCartItemQty = (id, type) => {
     foundProduct = cartItems.find((item) => item.id === id);
     index = cartItems.findIndex((product) => product.id === id);
+
     let newCartItems = cartItems.filter((item) => item.id !== id);
+    let newQuantity = foundProduct.quantity;
 
     if (type === "inc") {
       setTotalPrice((prevTotalPrice) => prevTotalPrice + foundProduct.price);
       setTotalQuantities((prevTotalQty) => prevTotalQty + 1);
-      setCartItems([
-        ...newCartItems.slice(0, index),
-        { ...foundProduct, quantity: foundProduct.quantity + 1 },
-        ...newCartItems.slice(index),
-      ]);
+      newQuantity += 1;
     }
 
-    if (type === "dec" && foundProduct.quantity > 1) {
+    if (type === "dec") {
+      if (foundProduct.quantity <= 1) return;
       setTotalPrice((prevTotalPrice) => prevTotalPrice - foundProduct.price);
       setTotalQuantities((prevTotalQty) => prevTotalQty - 1);
-      setCartItems([
-        ...newCartItems.slice(0, index),
-        { ...foundProduct, quantity: foundProduct.quantity - 1 },
-        ...newCartItems.slice(index),
-      ]);
+      newQuantity -= 1;
     }
+
+    setCartItems([
+      ...newCartItems.slice(0, index),
+      { ...foundProduct, quantity: newQuantity },
+      ...newCartItems.slice(index),
+    ]);
+  };
+
+  const isProductInCart = (id) => {
+    return cartItems.some((item) => item.id === id);
   };
 
   const onRemove = (id) => {
@@ -83,6 +89,7 @@ const CartProvider = ({ children }) => {
         prevTotalPrice - foundProduct.price * foundProduct.quantity
     );
     setTotalQuantities((prevTotalQty) => prevTotalQty - foundProduct.quantity);
+    toast.success(`${foundProduct.title} removed from cart`);
   };
 
   const changeQty = (type) => {
@@ -110,6 +117,7 @@ const CartProvider = ({ children }) => {
         setCartItems,
         setTotalPrice,
         setTotalQuantities,
+        isProductInCart,
       }}
     >
       {children}
