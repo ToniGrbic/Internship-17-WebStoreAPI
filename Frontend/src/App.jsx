@@ -48,10 +48,12 @@ function App() {
         <Route path="/orders" element={<Orders />} />
         <Route path="/wishlist" element={<Wishlist />} />
       </Route>
+
       <Route element={<AuthLayout />}>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Route>
+
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
