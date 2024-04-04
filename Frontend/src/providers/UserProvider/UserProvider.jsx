@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
+import { toast } from "react-hot-toast";
 
 const Context = createContext({
   user: null,
@@ -23,11 +24,13 @@ const UserProvider = ({ children }) => {
 
   const addToWishlist = (product) => {
     setWishlist([...wishlist, product]);
+    toast.success(`${product.title} added to wishlist`);
   };
 
   const removeFromWishlist = (id) => {
     const updatedWishlist = wishlist.filter((product) => product.id !== id);
     setWishlist(updatedWishlist);
+    toast.success("Removed from wishlist");
   };
 
   return (

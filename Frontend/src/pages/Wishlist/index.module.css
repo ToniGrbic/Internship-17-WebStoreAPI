@@ -45,6 +45,18 @@
   gap: 10px;
 }
 
+.wishlist-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  background: lightblue;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  &:hover {
+    background-color: #6dd4f6;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .wishlist-item-container {
     width: 100%;

@@ -2,10 +2,21 @@ import React from "react";
 import styles from "./index.module.css";
 import { useUser } from "../../providers/UserProvider/UserProvider";
 import { useNavigate } from "react-router-dom";
+import { useCartContext } from "../../providers/CartProvider/CartProvider";
 
 const Wishlist = () => {
-  const { wishlist } = useUser();
+  const { wishlist, removeFromWishlist } = useUser();
+  const { addToCart, isProductInCart, onRemove } = useCartContext();
   const navigate = useNavigate();
+
+  const handleCartClick = (e, product) => {
+    e.stopPropagation();
+    if (isProductInCart(product.id)) {
+      onRemove(product.id);
+    } else {
+      addToCart(product, 1);
+    }
+  };
 
   return (
     <div className={styles["wishlist-container"]}>
@@ -30,8 +41,21 @@ const Wishlist = () => {
                 <p>${product.price}</p>
               </div>
               <div className={styles["wishlist-btn-container"]}>
-                <button className={styles["wishlist-btn"]}>Remove</button>
-                <button className={styles["wishlist-btn"]}>Add to Cart</button>
+                <button
+                  className={styles["wishlist-btn"]}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    removeFromWishlist(product.id);
+                  }}
+                >
+                  Remove
+                </button>
+                <button
+                  className={styles["wishlist-btn"]}
+                  onClick={(e) => handleCartClick(e, product)}
+                >
+                  {isProductInCart(product.id) ? "In Cart" : "Add to Cart"}
+                </button>
               </div>
             </div>
           </div>
