@@ -3,7 +3,6 @@ import styles from "./index.module.css";
 import { Link } from "react-router-dom";
 import { TiDeleteOutline } from "react-icons/ti";
 import { useCartContext } from "../../providers/CartProvider/CartProvider";
-import useFetchProducts from "../../hooks/useFetchProducts";
 import {
   AiOutlineMinus,
   AiOutlinePlus,
@@ -12,15 +11,11 @@ import {
 } from "react-icons/ai";
 
 const Cart = () => {
-  const { products } = useFetchProducts();
   const {
     totalPrice,
     totalQuantities,
     cartItems,
-    setCartItems,
     setShowCart,
-    setTotalQuantities,
-    setTotalPrice,
     toggleCartItemQty,
     onRemove,
   } = useCartContext();
@@ -28,12 +23,6 @@ const Cart = () => {
   const handleCheckout = () => {
     console.log("add orders to db");
   };
-
-  useEffect(() => {
-    setCartItems(products.map((product) => ({ ...product, quantity: 1 })));
-    setTotalQuantities(products.length);
-    setTotalPrice(products.reduce((acc, product) => acc + product.price, 0));
-  }, [products]);
 
   return (
     <div className={styles["cart-wrapper"]}>
