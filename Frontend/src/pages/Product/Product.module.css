@@ -46,3 +46,21 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
 }
+
+.button {
+  padding: 1rem 1.5rem;
+  border: none;
+  background-color: lightblue;
+  font-weight: bold;
+  font-size: 15px;
+
+  &:hover {
+    background-color: #6dd4f6;
+  }
+}
+
+.buttons-container {
+  display: flex;
+  margin-top: 1rem;
+  gap: 1rem;
+}

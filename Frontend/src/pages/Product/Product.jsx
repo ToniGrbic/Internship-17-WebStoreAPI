@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { useCartContext } from "../../providers/CartProvider/CartProvider";
 import styles from "./Product.module.css";
 import ProductCard from "../../components/ProductCard";
+import { useUser } from "../../providers/UserProvider/UserProvider";
 
 const Product = ({ products }) => {
   const location = useLocation();
-  const [otherProducts, setOtherProducts] = useState([]);
   const product = location?.state;
+  const [otherProducts, setOtherProducts] = useState([]);
+
+  const { isProductInCart, onRemove, addToCart } = useCartContext();
+  const { isOnWishlist, removeFromWishlist, addToWishlist } = useUser();
 
   useEffect(() => {
     const otherProducts = products.filter((product) => {
@@ -14,6 +19,16 @@ const Product = ({ products }) => {
     });
     setOtherProducts(otherProducts);
   }, [product, products]);
+
+  const handleCartClick = (id) => {
+    if (isProductInCart(id)) onRemove(id);
+    else addToCart(product, 1);
+  };
+
+  const handleWishlistClick = () => {
+    if (isOnWishlist(product.id)) removeFromWishlist(product.id);
+    else addToWishlist(product);
+  };
 
   return (
     <>
@@ -28,6 +43,20 @@ const Product = ({ products }) => {
               <p>Category: {product.category}</p>
               <p>Price: ${product.price}</p>
               <p>{product.description}</p>
+              <div className={styles["buttons-container"]}>
+                <button
+                  className={styles["button"]}
+                  onClick={() => handleCartClick(product.id)}
+                >
+                  {isProductInCart(product.id) ? "In Cart" : "Add to Cart"}
+                </button>
+                <button
+                  onClick={() => handleWishlistClick()}
+                  className={styles["button"]}
+                >
+                  {isOnWishlist(product.id) ? "In Wishlist" : "Add to Wishlist"}
+                </button>
+              </div>
             </div>
           </div>
           <h2 className={styles["other-products-title"]}>Other products: </h2>
