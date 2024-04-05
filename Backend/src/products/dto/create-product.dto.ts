@@ -19,12 +19,17 @@ export class CreateProductDto {
   @IsNumber()
   price: number;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
+  @IsString()
+  @IsOptional()
+  category?: string;
+
+  @ApiProperty({ required: false, default: 0 })
   @IsNumber()
   @IsOptional()
   rating?: number;
 
-  @ApiProperty()
+  @ApiProperty({ required: false, default: 0 })
   @IsNumber()
   @IsOptional()
   ratingCount?: number;

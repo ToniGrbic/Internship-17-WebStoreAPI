@@ -7,11 +7,14 @@ export class ProductEntity implements Product {
   @ApiProperty()
   title: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   description: string;
 
-  @ApiProperty()
-  image: string;
+  @ApiProperty({ required: false })
+  category: string;
+
+  @ApiProperty({ nullable: true })
+  image: string | null;
 
   @ApiProperty()
   price: number;
