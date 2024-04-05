@@ -2,8 +2,11 @@ import React from "react";
 import styles from "./HomePage.module.css";
 import ProductCard from "../../components/ProductCard";
 import LoadingSpinner from "../../components/LoadingSpinner";
+import useFetchProducts from "../../hooks/useFetchProducts";
 
-const HomePage = ({ products, isLoading, isError }) => {
+const HomePage = () => {
+  const { products, isLoading, isError } = useFetchProducts();
+
   if (isError) {
     return <h2>Something went wrong, try again later...</h2>;
   }

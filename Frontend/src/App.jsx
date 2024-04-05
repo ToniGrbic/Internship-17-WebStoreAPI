@@ -15,32 +15,13 @@ import AuthLayout from "./components/Layouts/AuthLayout";
 
 function App() {
   const [search, setSearch] = useState("");
-  const { products, categories, isLoading, isError } = useFetchProducts();
+  const { products } = useFetchProducts();
 
   return (
     <Routes>
       <Route element={<Navigation setSearch={setSearch} />}>
-        <Route
-          path="/"
-          element={
-            <HomePage
-              products={products}
-              isLoading={isLoading}
-              isError={isError}
-            />
-          }
-        />
-        <Route
-          path="/products"
-          element={
-            <Products
-              products={products}
-              categories={categories}
-              search={search}
-              setSearch={setSearch}
-            />
-          }
-        />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/products" element={<Products search={search} />} />
         <Route
           path="/product/:productId"
           element={<Product products={products} />}
