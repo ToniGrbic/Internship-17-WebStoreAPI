@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styles from "./index.module.css";
 import { Link } from "react-router-dom";
 import { TiDeleteOutline } from "react-icons/ti";
 import { useCartContext } from "../../providers/CartProvider/CartProvider";
+import { useUser } from "../../providers/UserProvider/UserProvider";
 import {
   AiOutlineMinus,
   AiOutlinePlus,
@@ -18,10 +19,14 @@ const Cart = () => {
     setShowCart,
     toggleCartItemQty,
     onRemove,
+    onRemoveAll,
   } = useCartContext();
 
+  const { addToOrders } = useUser();
+
   const handleCheckout = () => {
-    console.log("add orders to db");
+    addToOrders(cartItems);
+    onRemoveAll();
   };
 
   return (
