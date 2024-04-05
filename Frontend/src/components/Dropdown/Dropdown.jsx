@@ -1,11 +1,13 @@
 import React from "react";
 import styles from "./index.module.css";
+import { toast } from "react-hot-toast";
 import { useUser } from "../../providers/UserProvider/UserProvider";
 import { useNavigate } from "react-router-dom";
 
 const Dropdown = ({ showDropdown }) => {
   const { setIsLoggedIn } = useUser();
   const navigate = useNavigate();
+
   return (
     <div
       style={showDropdown ? { display: "flex" } : {}}
@@ -31,7 +33,11 @@ const Dropdown = ({ showDropdown }) => {
       </button>
       <button
         className={styles["button-auth"]}
-        onClick={() => setIsLoggedIn(false)}
+        onClick={() => {
+          setIsLoggedIn(false);
+          navigate("/");
+          toast.success("Logged out successfully");
+        }}
       >
         Sign out
       </button>
