@@ -10,7 +10,7 @@ export class ProductEntity implements Product {
   @ApiProperty({ required: false })
   description: string;
 
-  @ApiProperty({ required: false })
+  @ApiProperty()
   category: string;
 
   @ApiProperty({ nullable: true })
