@@ -11,6 +11,7 @@ const Context = createContext({
   addToCart: () => {},
   toggleCartItemQty: () => {},
   onRemove: () => {},
+  onRemoveAll: () => {},
   setShowCart: () => {},
   setCartItems: () => {},
   setTotalPrice: () => {},
@@ -92,6 +93,12 @@ const CartProvider = ({ children }) => {
     toast.success(`${foundProduct.title} removed from cart`);
   };
 
+  const onRemoveAll = () => {
+    setCartItems([]);
+    setTotalPrice(0);
+    setTotalQuantities(0);
+  };
+
   const changeQty = (type) => {
     if (type === "dec") {
       qty >= 2 && setQty((prev) => prev - 1);
@@ -113,6 +120,7 @@ const CartProvider = ({ children }) => {
         addToCart,
         toggleCartItemQty,
         onRemove,
+        onRemoveAll,
         setShowCart,
         setCartItems,
         setTotalPrice,
