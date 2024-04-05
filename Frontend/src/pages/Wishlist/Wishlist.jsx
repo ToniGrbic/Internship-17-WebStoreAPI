@@ -21,46 +21,50 @@ const Wishlist = () => {
   return (
     <div className={styles["wishlist-container"]}>
       <h1>Wishlist</h1>
-      {wishlist.map((product) => {
-        return (
-          <div
-            className={styles["wishlist-item-container"]}
-            onClick={() =>
-              navigate(`/product/${product.id}`, { state: product })
-            }
-            key={product.id}
-          >
-            <div className={styles["wishlist-item"]}>
-              <img
-                src={product.image}
-                alt="product"
-                className={styles["wishlist-img"]}
-              />
-              <div className={styles["wishlist-details"]}>
-                <h3>{product.title}</h3>
-                <p>${product.price}</p>
-              </div>
-              <div className={styles["wishlist-btn-container"]}>
-                <button
-                  className={styles["wishlist-btn"]}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    removeFromWishlist(product.id);
-                  }}
-                >
-                  Remove
-                </button>
-                <button
-                  className={styles["wishlist-btn"]}
-                  onClick={(e) => handleCartClick(e, product)}
-                >
-                  {isProductInCart(product.id) ? "In Cart" : "Add to Cart"}
-                </button>
+      {wishlist.length < 1 ? (
+        <h2>No items in wishlist...</h2>
+      ) : (
+        wishlist.map((product) => {
+          return (
+            <div
+              className={styles["wishlist-item-container"]}
+              onClick={() =>
+                navigate(`/product/${product.id}`, { state: product })
+              }
+              key={product.id}
+            >
+              <div className={styles["wishlist-item"]}>
+                <img
+                  src={product.image}
+                  alt="product"
+                  className={styles["wishlist-img"]}
+                />
+                <div className={styles["wishlist-details"]}>
+                  <h3>{product.title}</h3>
+                  <p>${product.price}</p>
+                </div>
+                <div className={styles["wishlist-btn-container"]}>
+                  <button
+                    className={styles["wishlist-btn"]}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      removeFromWishlist(product.id);
+                    }}
+                  >
+                    Remove
+                  </button>
+                  <button
+                    className={styles["wishlist-btn"]}
+                    onClick={(e) => handleCartClick(e, product)}
+                  >
+                    {isProductInCart(product.id) ? "In Cart" : "Add to Cart"}
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })
+      )}
     </div>
   );
 };
