@@ -9,6 +9,7 @@ import LoadingSpinner from "../../components/LoadingSpinner";
 const Products = ({ search }) => {
   const [categoryFilter, setCategoryFilter] = useState("All");
   const [filteredProducts, setFilteredProducts] = useState([]);
+
   const [searchParams, setSearchParams] = useSearchParams();
   const { products, categories, isLoading, isError } = useFetchProducts();
 
@@ -33,6 +34,10 @@ const Products = ({ search }) => {
     setSearchParams({ search: searchTerm });
     setFilteredProducts(filterProducts(searchTerm));
   }, [products, search, categoryFilter]);
+
+  if (isError) {
+    return <h2>Something went wrong, try again later...</h2>;
+  }
 
   return (
     <div>
