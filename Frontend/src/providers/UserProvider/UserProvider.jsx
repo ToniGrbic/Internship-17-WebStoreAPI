@@ -5,18 +5,20 @@ const Context = createContext({
   user: null,
   isLoggedIn: false,
   wishlist: [],
+  orders: [],
   setUser: () => {},
   setIsLoggedIn: () => {},
-  setWishlist: () => {},
   isOnWishlist: () => {},
   addToWishlist: () => {},
   removeFromWishlist: () => {},
+  addToOrders: () => {},
 });
 
 const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [wishlist, setWishlist] = useState([]);
+  const [orders, setOrders] = useState([]);
 
   const isOnWishlist = (id) => {
     return wishlist?.some((item) => item.id === id);
@@ -33,18 +35,29 @@ const UserProvider = ({ children }) => {
     toast.success("Removed from wishlist");
   };
 
+  const addToOrders = (cartItems) => {
+    setOrders([
+      ...orders,
+      ...cartItems.map((cartItem) => {
+        return { ...cartItem, status: "PENDING" };
+      }),
+    ]);
+    toast.success(`products bought successfully!`);
+  };
+
   return (
     <Context.Provider
       value={{
         user,
         isLoggedIn,
         wishlist,
+        orders,
         setUser,
         setIsLoggedIn,
-        setWishlist,
         isOnWishlist,
         removeFromWishlist,
         addToWishlist,
+        addToOrders,
       }}
     >
       {children}
