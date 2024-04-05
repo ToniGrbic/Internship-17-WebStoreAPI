@@ -11,42 +11,45 @@ async function main() {
     },
   });
 
-  const article1 = await prisma.product.upsert({
+  const product1 = await prisma.product.upsert({
     where: { title: 'Watch' },
     update: {},
     create: {
       title: 'Watch',
       description: 'Description1',
       price: 5.0,
-      storeId: 1,
+      category: 'Accessories',
       rating: 4.5,
       ratingCount: 10,
+      storeId: 1,
     },
   });
 
-  const article2 = await prisma.product.upsert({
+  const product2 = await prisma.product.upsert({
     where: { title: 'T-Shirt' },
     update: {},
     create: {
       title: 'T-Shirt',
       description: 'Description2',
       price: 10.0,
-      storeId: 1,
+      category: 'Clothing',
       rating: 4.0,
       ratingCount: 15,
+      storeId: 1,
     },
   });
 
-  const article3 = await prisma.product.upsert({
+  const product3 = await prisma.product.upsert({
     where: { title: 'Pants' },
     update: {},
     create: {
       title: 'Pants',
       description: 'Description3',
       price: 15.0,
-      storeId: 1,
+      category: 'Clothing',
       rating: 4.2,
       ratingCount: 20,
+      storeId: 1,
     },
   });
 
@@ -120,9 +123,9 @@ async function main() {
   console.log({
     user1,
     user2,
-    article1,
-    article2,
-    article3,
+    product1,
+    product2,
+    product3,
     order1,
     order2,
     wishlist1,
