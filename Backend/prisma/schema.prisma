@@ -14,6 +14,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum OrderStatus {
+  PENDING
+  DELIVERED
+  CANCELLED
+}
+
 model Product {
   id          Int            @id @default(autoincrement())
   title       String         @unique
@@ -60,6 +66,7 @@ model Order {
   productId Int
   product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   quantity  Int
+  status    OrderStatus   @default(PENDING)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
