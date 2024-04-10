@@ -15,9 +15,9 @@ export class CreateProductDto {
   @IsOptional()
   image?: string;
 
-  @ApiProperty()
+  @ApiProperty({ nullable: true })
   @IsNumber()
-  price: number;
+  price: number | null;
 
   @ApiProperty({ required: false })
   @IsString()

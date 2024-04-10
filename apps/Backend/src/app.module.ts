@@ -7,6 +7,8 @@ import { UsersModule } from './users/users.module';
 import { OrdersModule } from './orders/orders.module';
 import { CartsModule } from './carts/cart-items.module';
 import { WishlistsModule } from './wishlists/wishlists.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [

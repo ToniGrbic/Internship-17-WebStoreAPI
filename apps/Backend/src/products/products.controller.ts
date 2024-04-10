@@ -21,6 +21,7 @@ import {
 } from '@nestjs/swagger';
 import { ProductEntity } from './entities/product.entity';
 import { AdminAuthGuard } from 'src/users/guards/admin-auth.guard';
+import { Product } from '@prisma/client';
 
 @Controller('products')
 @ApiTags('products')
@@ -31,7 +32,7 @@ export class ProductsController {
   @ApiBearerAuth()
   @UseGuards(AdminAuthGuard)
   @ApiCreatedResponse({ type: ProductEntity })
-  create(@Body() createProductDto: CreateProductDto) {
+  create(@Body() createProductDto: ProductEntity) {
     return this.productsService.create(createProductDto);
   }
 
