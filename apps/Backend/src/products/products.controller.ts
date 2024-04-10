@@ -21,7 +21,7 @@ import {
 } from '@nestjs/swagger';
 import { ProductEntity } from './entities/product.entity';
 import { AdminAuthGuard } from 'src/users/guards/admin-auth.guard';
-import { Product } from '@prisma/client';
+import { UserAuthGuard } from 'src/users/guards/user-auth.guard';
 
 @Controller('products')
 @ApiTags('products')
