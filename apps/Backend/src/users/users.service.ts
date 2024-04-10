@@ -58,6 +58,7 @@ export class UsersService {
     const payload = {
       id: user.id,
       email: user.email,
+      name: user.name,
       isAdmin: user.isAdmin,
     };
     return { token: this.jwtService.sign(payload), ...payload };
