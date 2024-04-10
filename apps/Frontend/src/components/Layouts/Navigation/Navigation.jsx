@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styles from "./Navigation.module.css";
 import { Outlet, useNavigate } from "react-router-dom";
-import { useUser } from "../../../providers/UserProvider/UserProvider";
 import { useCartContext } from "../../../providers/CartProvider/CartProvider";
 import { AiOutlineShopping } from "react-icons/ai";
 import { CiSearch } from "react-icons/ci";
@@ -22,7 +21,6 @@ const Navigation = ({ setSearch }) => {
     navigate("/products");
   };
   const cookies = new Cookies();
-  const { isLoggedIn } = useUser();
   const { setShowCart, totalQuantities, showCart } = useCartContext();
   return (
     <>
@@ -48,7 +46,7 @@ const Navigation = ({ setSearch }) => {
             <span className={styles["cart-item-qty"]}>{totalQuantities}</span>
           </button>
           {showCart && <Cart />}
-          {!isLoggedIn ? (
+          {!cookies.get("token") ? (
             <button
               className={styles["button-auth"]}
               onClick={() => navigate("/login")}
