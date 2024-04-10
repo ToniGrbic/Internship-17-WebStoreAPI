@@ -9,6 +9,7 @@ import defaultAvatar from "../../../assets/default-avatar.jpg";
 import TextInput from "../../Inputs/TextInput";
 import Dropdown from "../../Dropdown";
 import Cart from "../../Cart";
+import Cookies from "universal-cookie";
 
 const Navigation = ({ setSearch }) => {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ const Navigation = ({ setSearch }) => {
     setSearch(searchTerm);
     navigate("/products");
   };
-
+  const cookies = new Cookies();
   const { isLoggedIn } = useUser();
   const { setShowCart, totalQuantities, showCart } = useCartContext();
   return (
@@ -61,6 +62,9 @@ const Navigation = ({ setSearch }) => {
               className={styles["user-avatar"]}
             >
               <img src={defaultAvatar} alt="avatar" />
+              <div className={styles["user-name"]}>
+                {cookies.get("username")}
+              </div>
               <Dropdown showDropdown={showDropdown} />
             </div>
           )}
