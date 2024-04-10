@@ -5,7 +5,7 @@ const useFetchProducts = () => {
   const [categories, setCategories] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [isError, setError] = useState(false);
-  const url = "https://fakestoreapi.com/products";
+  const url = "http://localhost:3000/api/products";
 
   const getCategories = (products) => {
     const categories = products.reduce((acc, product) => {
