@@ -4,24 +4,46 @@ import styles from "../index.module.css";
 import TextInput from "../../../components/Inputs/TextInput";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../../../providers/UserProvider/UserProvider";
+import Cookies from "universal-cookie";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { setIsLoggedIn } = useUser();
+  const { setIsLoggedIn, setUser } = useUser();
 
   const navigate = useNavigate();
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email || !password) {
       toast.error("Please fill all fields!");
       return;
     }
+
+    try {
+      const res = await fetch("http://localhost:3000/api/users/login", {
+        method: "POST",
+        body: JSON.stringify({ email, password }),
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (!res.ok) {
+        throw new Error("Invalid email or password!");
+      }
+
+      const data = await res.json();
+      const cookies = new Cookies();
+      cookies.set("token", data.token, { path: "/" });
+      cookies.set("username", data.name, { path: "/" });
+
+      setIsLoggedIn(true);
+      setUser(data);
+      toast.success("Logged in successfully!");
+      navigate("/");
+    } catch (error) {
+      toast.error("Invalid email or password!");
+    }
     setEmail("");
     setPassword("");
-    setIsLoggedIn(true);
-    toast.success("Logged in successfully!");
-    navigate("/");
   };
 
   return (
