@@ -12,13 +12,15 @@ async function main() {
   });
 
   const product1 = await prisma.product.upsert({
-    where: { title: 'Watch' },
+    where: { title: 'Fjallraven - Foldsack No. 1 Backpack' },
     update: {},
     create: {
-      title: 'Watch',
-      description: 'Description1',
-      price: 5.0,
-      category: 'Accessories',
+      title: 'Fjallraven - Foldsack No. 1 Backpack',
+      image: 'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg',
+      description:
+        'Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday',
+      price: 109.95,
+      category: "men's clothing",
       rating: 4.5,
       ratingCount: 10,
       storeId: 1,
@@ -26,13 +28,16 @@ async function main() {
   });
 
   const product2 = await prisma.product.upsert({
-    where: { title: 'T-Shirt' },
+    where: { title: 'Mens Casual Premium Slim Fit T-Shirts' },
     update: {},
     create: {
-      title: 'T-Shirt',
-      description: 'Description2',
-      price: 10.0,
-      category: 'Clothing',
+      title:
+        "John Hardy Women's Legends Naga Gold & Silver Dragon Station Chain Bracelet",
+      price: 695,
+      description:
+        "From our Legends Collection, the Naga was inspired by the mythical water dragon that protects the ocean's pearl. Wear facing inward to be bestowed with love and abundance, or outward for protection.",
+      category: 'jewelery',
+      image: 'https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg',
       rating: 4.0,
       ratingCount: 15,
       storeId: 1,
@@ -40,13 +45,15 @@ async function main() {
   });
 
   const product3 = await prisma.product.upsert({
-    where: { title: 'Pants' },
+    where: { title: 'WD 2TB Elements Portable External Hard Drive' },
     update: {},
     create: {
-      title: 'Pants',
-      description: 'Description3',
-      price: 15.0,
-      category: 'Clothing',
+      title: 'WD 2TB Elements Portable External Hard Drive',
+      price: 64,
+      description:
+        'USB 3.0 and USB 2.0 Compatibility Fast data transfers Improve PC Performance High Capacity; Compatibility Formatted NTFS for Windows 10, Windows 8.1, Windows 7; Reformatting may be required for other operating systems; Compatibility may vary depending on user’s hardware configuration and operating system',
+      category: 'electronics',
+      image: 'https://fakestoreapi.com/img/61IBBVJvSDL._AC_SY879_.jpg',
       rating: 4.2,
       ratingCount: 20,
       storeId: 1,
