@@ -11,7 +11,12 @@ export class CartItemsService {
   }
 
   findByUserId(id: number) {
-    return this.prisma.cartItem.findMany({ where: { userId: id } });
+    return this.prisma.cartItem.findMany({
+      where: { userId: id },
+      include: {
+        product: true,
+      },
+    });
   }
 
   remove(id: number) {
