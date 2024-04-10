@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styles from "../index.module.css";
 import TextInput from "../../../components/Inputs/TextInput";
 import { useNavigate } from "react-router";
+import { baseUrl } from "../../../constants/constants";
 import toast from "react-hot-toast";
 
 const Register = () => {
@@ -23,7 +24,7 @@ const Register = () => {
     }
 
     try {
-      const res = await fetch("http://localhost:3000/api/users/register", {
+      const res = await fetch(`${baseUrl}/users/register`, {
         method: "POST",
         body: JSON.stringify({ name, email, password }),
         headers: { "Content-Type": "application/json" },

@@ -5,6 +5,7 @@ import TextInput from "../../../components/Inputs/TextInput";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../../../providers/UserProvider/UserProvider";
 import Cookies from "universal-cookie";
+import { baseUrl } from "../../../constants/constants";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -20,7 +21,7 @@ const Login = () => {
     }
 
     try {
-      const res = await fetch("http://localhost:3000/api/users/login", {
+      const res = await fetch(`${baseUrl}/users/login`, {
         method: "POST",
         body: JSON.stringify({ email, password }),
         headers: { "Content-Type": "application/json" },
