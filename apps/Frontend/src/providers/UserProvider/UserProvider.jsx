@@ -12,6 +12,8 @@ const Context = createContext({
   addToWishlist: () => {},
   removeFromWishlist: () => {},
   addToOrders: () => {},
+  setOrders: () => {},
+  setWishlist: () => {},
 });
 
 const UserProvider = ({ children }) => {
@@ -58,6 +60,8 @@ const UserProvider = ({ children }) => {
         removeFromWishlist,
         addToWishlist,
         addToOrders,
+        setOrders,
+        setWishlist,
       }}
     >
       {children}
