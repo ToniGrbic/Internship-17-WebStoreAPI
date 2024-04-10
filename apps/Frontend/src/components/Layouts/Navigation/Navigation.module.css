@@ -80,6 +80,11 @@ h2.navigation-title {
   }
 }
 
+.user-name {
+  position: relative;
+  bottom: 16px;
+}
+
 @media screen and (max-width: 560px) {
   h2.navigation-title {
     display: none;
