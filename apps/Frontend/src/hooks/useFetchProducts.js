@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
+import { baseUrl } from "../constants/constants";
 
 const useFetchProducts = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [isError, setError] = useState(false);
-  const url = "http://localhost:3000/api/products";
 
   const getCategories = (products) => {
     const categories = products.reduce((acc, product) => {
@@ -18,7 +18,7 @@ const useFetchProducts = () => {
   useEffect(() => {
     (async () => {
       try {
-        const response = await fetch(url);
+        const response = await fetch(`${baseUrl}/products`);
         const products = await response.json();
         setProducts(products);
 
