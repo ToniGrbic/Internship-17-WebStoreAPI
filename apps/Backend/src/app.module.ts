@@ -18,6 +18,9 @@ import { join } from 'path';
     OrdersModule,
     CartsModule,
     WishlistsModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '../../..', 'Frontend', 'dist'),
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
