@@ -1,5 +1,9 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
+import Cookies from "universal-cookie";
+import { baseUrl } from "../../constants/constants";
+import { useUser } from "../UserProvider/UserProvider";
+import { useNavigate } from "react-router-dom";
 
 const Context = createContext({
   showCart: false,
@@ -26,8 +30,42 @@ const CartProvider = ({ children }) => {
   const [totalQuantities, setTotalQuantities] = useState(0);
   const [qty, setQty] = useState(1);
 
+  const { user } = useUser();
+  const navigate = useNavigate();
+
   let foundProduct;
   let index;
+
+  useEffect(() => {
+    (async () => {
+      const cookies = new Cookies();
+      const token = cookies.get("token");
+      if (!token) {
+        navigate("/");
+        return;
+      }
+
+      try {
+        const res = await fetch(`${baseUrl}/cart-items`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (!res.ok) {
+          throw new Error("Something went wrong, try again later!");
+        }
+
+        const cartItems = await res.json();
+        setCartItems(cartItems);
+        setTotalQuantities(
+          cartItems.reduce((acc, item) => acc + item.quantity, 0)
+        );
+        setTotalPrice(
+          cartItems.reduce((acc, item) => acc + item.product.price, 0)
+        );
+      } catch (error) {
+        toast.error("Something went wrong, try again later!");
+      }
+    })();
+  }, [user]);
 
   const addToCart = (product, quantity) => {
     const ProductInCart = cartItems.find((item) => item.id === product.id);

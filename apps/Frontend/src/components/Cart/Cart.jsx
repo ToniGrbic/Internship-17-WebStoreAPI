@@ -1,9 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styles from "./index.module.css";
-import Cookies from "universal-cookie";
-import toast from "react-hot-toast";
-import { baseUrl } from "../../constants/constants";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { TiDeleteOutline } from "react-icons/ti";
 import { useCartContext } from "../../providers/CartProvider/CartProvider";
 import { useUser } from "../../providers/UserProvider/UserProvider";
@@ -15,15 +12,11 @@ import {
 } from "react-icons/ai";
 
 const Cart = () => {
-  const navigate = useNavigate();
   const {
     totalPrice,
     totalQuantities,
     cartItems,
     setShowCart,
-    setCartItems,
-    setTotalQuantities,
-    setTotalPrice,
     toggleCartItemQty,
     onRemove,
     onRemoveAll,
@@ -35,38 +28,6 @@ const Cart = () => {
     addToOrders(cartItems);
     onRemoveAll();
   };
-
-  useEffect(() => {
-    (async () => {
-      const cookies = new Cookies();
-      const token = cookies.get("token");
-      if (!token) {
-        navigate("/");
-        return;
-      }
-
-      try {
-        const res = await fetch(`${baseUrl}/cart-items`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
-        if (!res.ok) {
-          throw new Error("Something went wrong, try again later!");
-        }
-
-        const cartItems = await res.json();
-        setCartItems(cartItems);
-        setTotalQuantities(
-          cartItems.reduce((acc, item) => acc + item.quantity, 0)
-        );
-        setTotalPrice(
-          cartItems.reduce((acc, item) => acc + item.product.price, 0)
-        );
-      } catch (error) {
-        toast.error("Something went wrong, try again later!");
-      }
-    })();
-  }, []);
 
   return (
     <div className={styles["cart-wrapper"]}>
