@@ -10,7 +10,7 @@ import { baseUrl } from "../../../constants/constants";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { setIsLoggedIn, setUser } = useUser();
+  const { setUser } = useUser();
 
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
@@ -19,7 +19,6 @@ const Login = () => {
       toast.error("Please fill all fields!");
       return;
     }
-
     try {
       const res = await fetch(`${baseUrl}/users/login`, {
         method: "POST",
@@ -27,22 +26,18 @@ const Login = () => {
         headers: { "Content-Type": "application/json" },
       });
 
-      if (!res.ok) {
-        throw new Error("Invalid email or password!");
-      }
-
       const data = await res.json();
       const cookies = new Cookies();
       cookies.set("token", data.token, { path: "/" });
       cookies.set("username", data.name, { path: "/" });
 
-      setIsLoggedIn(true);
-      setUser(data);
       toast.success("Logged in successfully!");
+      setUser(data);
       navigate("/");
     } catch (error) {
-      toast.error("Invalid email or password!");
+      toast.error("Invalid credentials!");
     }
+
     setEmail("");
     setPassword("");
   };
