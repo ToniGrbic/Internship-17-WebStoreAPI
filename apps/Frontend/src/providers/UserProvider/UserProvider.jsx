@@ -47,7 +47,6 @@ const UserProvider = ({ children }) => {
     <Context.Provider
       value={{
         user,
-
         wishlist,
         orders,
         setUser,
