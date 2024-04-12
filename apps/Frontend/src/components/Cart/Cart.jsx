@@ -125,7 +125,7 @@ const Cart = () => {
                       <button
                         type="button"
                         className={styles["remove-item"]}
-                        onClick={() => onRemove(item.id)}
+                        onClick={() => onRemove(item.product.id)}
                       >
                         <TiDeleteOutline />
                       </button>
