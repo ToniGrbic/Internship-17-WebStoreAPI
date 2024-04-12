@@ -131,18 +131,18 @@ const CartProvider = ({ children }) => {
   };
 
   const isProductInCart = (id) => {
-    return cartItems.some((item) => item.id === id);
+    return cartItems.some((item) => item.product.id === id);
   };
 
   const onRemove = (id) => {
-    foundProduct = cartItems.find((item) => item.id === id);
-    setCartItems(cartItems.filter((item) => item.id !== id));
+    foundProduct = cartItems.find((item) => item.product.id === id);
+    setCartItems(cartItems.filter((item) => item.product.id !== id));
     setTotalPrice(
       (prevTotalPrice) =>
         prevTotalPrice - foundProduct.product.price * foundProduct.quantity
     );
     setTotalQuantities((prevTotalQty) => prevTotalQty - foundProduct.quantity);
-    toast.success(`${foundProduct.title} removed from cart`);
+    toast.success(`${foundProduct.product.title} removed from cart`);
   };
 
   const onRemoveAll = () => {
