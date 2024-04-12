@@ -3,11 +3,9 @@ import { toast } from "react-hot-toast";
 
 const Context = createContext({
   user: null,
-  isLoggedIn: false,
   wishlist: [],
   orders: [],
   setUser: () => {},
-  setIsLoggedIn: () => {},
   isOnWishlist: () => {},
   addToWishlist: () => {},
   removeFromWishlist: () => {},
@@ -18,7 +16,6 @@ const Context = createContext({
 
 const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [wishlist, setWishlist] = useState([]);
   const [orders, setOrders] = useState([]);
 
@@ -44,18 +41,16 @@ const UserProvider = ({ children }) => {
         return { ...cartItem, status: "PENDING" };
       }),
     ]);
-    toast.success(`products bought successfully!`);
   };
 
   return (
     <Context.Provider
       value={{
         user,
-        isLoggedIn,
+
         wishlist,
         orders,
         setUser,
-        setIsLoggedIn,
         isOnWishlist,
         removeFromWishlist,
         addToWishlist,
