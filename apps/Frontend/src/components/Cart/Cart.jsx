@@ -1,7 +1,10 @@
 import React from "react";
 import styles from "./index.module.css";
+import Cookies from "universal-cookie";
+import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { TiDeleteOutline } from "react-icons/ti";
+import { baseUrl } from "../../constants/constants";
 import { useCartContext } from "../../providers/CartProvider/CartProvider";
 import { useUser } from "../../providers/UserProvider/UserProvider";
 import {
@@ -12,6 +15,8 @@ import {
 } from "react-icons/ai";
 
 const Cart = () => {
+  const cookies = new Cookies();
+  const token = cookies.get("token");
   const {
     totalPrice,
     totalQuantities,
@@ -24,9 +29,34 @@ const Cart = () => {
 
   const { addToOrders } = useUser();
 
-  const handleCheckout = () => {
-    addToOrders(cartItems);
-    onRemoveAll();
+  const handleCheckout = async () => {
+    if (!token) {
+      toast.error("Please login to order");
+      return;
+    }
+
+    const orders = cartItems.map((item) => {
+      return fetch(`${baseUrl}/orders`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          productId: item.product.id,
+          quantity: item.quantity,
+        }),
+      });
+    });
+
+    try {
+      await Promise.all(orders);
+      toast.success("Order placed successfully");
+      addToOrders(cartItems);
+      onRemoveAll();
+    } catch (error) {
+      toast.error("Something went wrong, try again later!");
+    }
   };
 
   return (
