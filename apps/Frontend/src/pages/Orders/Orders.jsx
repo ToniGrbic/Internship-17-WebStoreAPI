@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 import styles from "./index.module.css";
 import { useUser } from "../../providers/UserProvider/UserProvider";
 import { useNavigate } from "react-router-dom";
+import { baseUrl } from "../../constants/constants";
 import Cookies from "universal-cookie";
 import toast from "react-hot-toast";
-import { baseUrl } from "../../constants/constants";
 
 const Orders = () => {
   const { setOrders, orders } = useUser();
@@ -51,7 +51,7 @@ const Orders = () => {
                   state: order.product,
                 })
               }
-              key={order.product.id}
+              key={order.id}
             >
               <div className={styles["orders-item"]}>
                 <img
@@ -62,7 +62,7 @@ const Orders = () => {
                 <div className={styles["orders-details"]}>
                   <h3>{order.product.title}</h3>
                   <div className={styles["orders-sub-details"]}>
-                    <p> Total: ${order.product.price}</p>
+                    <p> Total: ${order.product.price * order.quantity}</p>
                     <p> Quantity: {order.quantity}</p>
                     <p>Status: {order.status}</p>
                   </div>
