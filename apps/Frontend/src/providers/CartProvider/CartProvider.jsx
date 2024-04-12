@@ -4,7 +4,7 @@ import Cookies from "universal-cookie";
 import { baseUrl } from "../../constants/constants";
 import { useUser } from "../UserProvider/UserProvider";
 import { useNavigate } from "react-router-dom";
-
+import { v4 as uuid } from "uuid";
 const Context = createContext({
   showCart: false,
   cartItems: [],
@@ -54,12 +54,20 @@ const CartProvider = ({ children }) => {
         }
 
         const cartItems = await res.json();
+        cartItems.forEach((item) => {
+          delete item.createdAt;
+          delete item.updatedAt;
+          delete item.userId;
+        });
         setCartItems(cartItems);
         setTotalQuantities(
           cartItems.reduce((acc, item) => acc + item.quantity, 0)
         );
         setTotalPrice(
-          cartItems.reduce((acc, item) => acc + item.product.price, 0)
+          cartItems.reduce(
+            (acc, item) => acc + item.product.price * item.quantity,
+            0
+          )
         );
       } catch (error) {
         toast.error("Something went wrong, try again later!");
@@ -69,7 +77,6 @@ const CartProvider = ({ children }) => {
 
   const addToCart = (product, quantity) => {
     const ProductInCart = cartItems.find((item) => item.id === product.id);
-
     setTotalPrice(
       (prevTotalPrice) => prevTotalPrice + product.price * quantity
     );
@@ -78,12 +85,15 @@ const CartProvider = ({ children }) => {
     if (ProductInCart) {
       const updatedCartItems = cartItems.map((item) => {
         if (item.id === product.id)
-          return { ...item, quantity: item.quantity + quantity };
+          return {
+            ...item,
+            quantity: item.quantity + quantity,
+          };
         return item;
       });
       setCartItems(updatedCartItems);
     } else {
-      const newItem = { ...product, quantity };
+      const newItem = { id: uuid(), product: { ...product }, quantity };
       setCartItems([...cartItems, newItem]);
     }
     toast.success(`${qty} ${product.title} added to cart`);
@@ -97,14 +107,18 @@ const CartProvider = ({ children }) => {
     let newQuantity = foundProduct.quantity;
 
     if (type === "inc") {
-      setTotalPrice((prevTotalPrice) => prevTotalPrice + foundProduct.price);
+      setTotalPrice(
+        (prevTotalPrice) => prevTotalPrice + foundProduct.product.price
+      );
       setTotalQuantities((prevTotalQty) => prevTotalQty + 1);
       newQuantity += 1;
     }
 
     if (type === "dec") {
       if (foundProduct.quantity <= 1) return;
-      setTotalPrice((prevTotalPrice) => prevTotalPrice - foundProduct.price);
+      setTotalPrice(
+        (prevTotalPrice) => prevTotalPrice - foundProduct.product.price
+      );
       setTotalQuantities((prevTotalQty) => prevTotalQty - 1);
       newQuantity -= 1;
     }
@@ -125,7 +139,7 @@ const CartProvider = ({ children }) => {
     setCartItems(cartItems.filter((item) => item.id !== id));
     setTotalPrice(
       (prevTotalPrice) =>
-        prevTotalPrice - foundProduct.price * foundProduct.quantity
+        prevTotalPrice - foundProduct.product.price * foundProduct.quantity
     );
     setTotalQuantities((prevTotalQty) => prevTotalQty - foundProduct.quantity);
     toast.success(`${foundProduct.title} removed from cart`);
