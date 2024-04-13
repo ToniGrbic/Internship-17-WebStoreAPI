@@ -50,4 +50,11 @@ export class CartItemsController {
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.cartItemsService.remove(id);
   }
+
+  @Delete()
+  @UseGuards(UserAuthGuard)
+  @ApiCreatedResponse({ type: CartItemEntity })
+  removeAllForUser(@Req() { user }) {
+    return this.cartItemsService.removeAllForUser(user.id);
+  }
 }

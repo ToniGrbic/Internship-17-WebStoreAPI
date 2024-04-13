@@ -22,4 +22,8 @@ export class CartItemsService {
   remove(id: number) {
     return this.prisma.cartItem.delete({ where: { id } });
   }
+
+  removeAllForUser(userId: number) {
+    return this.prisma.cartItem.deleteMany({ where: { userId } });
+  }
 }
