@@ -32,14 +32,13 @@ const CartProvider = ({ children }) => {
 
   const { user } = useUser();
   const navigate = useNavigate();
-
+  const cookies = new Cookies();
+  const token = cookies.get("token");
   let foundProduct;
   let index;
 
   useEffect(() => {
     (async () => {
-      const cookies = new Cookies();
-      const token = cookies.get("token");
       if (!token) {
         navigate("/");
         return;
@@ -134,21 +133,51 @@ const CartProvider = ({ children }) => {
     return cartItems.some((item) => item.product.id === id);
   };
 
-  const onRemove = (id) => {
-    foundProduct = cartItems.find((item) => item.product.id === id);
-    setCartItems(cartItems.filter((item) => item.product.id !== id));
-    setTotalPrice(
-      (prevTotalPrice) =>
-        prevTotalPrice - foundProduct.product.price * foundProduct.quantity
-    );
-    setTotalQuantities((prevTotalQty) => prevTotalQty - foundProduct.quantity);
-    toast.success(`${foundProduct.product.title} removed from cart`);
+  const onRemove = async (id) => {
+    console.log(id);
+    try {
+      if (token) {
+        const res = await fetch(`${baseUrl}/cart-items/${id}`, {
+          method: "DELETE",
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (!res.ok) {
+          throw new Error("Something went wrong, try again later!");
+        }
+      }
+      foundProduct = cartItems.find((item) => item.id === id);
+      setCartItems(cartItems.filter((item) => item.id !== id));
+      setTotalPrice(
+        (prevTotalPrice) =>
+          prevTotalPrice - foundProduct.product.price * foundProduct.quantity
+      );
+      setTotalQuantities(
+        (prevTotalQty) => prevTotalQty - foundProduct.quantity
+      );
+      toast.success(`${foundProduct.product.title} removed from cart`);
+    } catch (error) {
+      toast.error("Something went wrong, try again later!");
+    }
   };
 
-  const onRemoveAll = () => {
-    setCartItems([]);
-    setTotalPrice(0);
-    setTotalQuantities(0);
+  const onRemoveAll = async () => {
+    try {
+      if (token) {
+        const res = await fetch(`${baseUrl}/cart-items`, {
+          method: "DELETE",
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (!res.ok) {
+          throw new Error("Something went wrong, try again later!");
+        }
+      }
+      setCartItems([]);
+      setTotalPrice(0);
+      setTotalQuantities(0);
+      toast.success("Cart cleared successfully");
+    } catch (error) {
+      toast.error("Something went wrong, try again later!");
+    }
   };
 
   const changeQty = (type) => {
