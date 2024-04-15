@@ -9,8 +9,9 @@ const Product = ({ products }) => {
   const { state: product } = useLocation();
   const [otherProducts, setOtherProducts] = useState([]);
 
-  const { isProductInCart, onRemove, addToCart } = useCartContext();
-  const { isOnWishlist, removeFromWishlist, addToWishlist } = useUser();
+  const { isProductInCart, onRemove, addToCart, cartItems } = useCartContext();
+  const { isOnWishlist, removeFromWishlist, addToWishlist, wishlist } =
+    useUser();
 
   useEffect(() => {
     const otherProducts = products.filter((product) => {
@@ -20,12 +21,16 @@ const Product = ({ products }) => {
   }, [product, products]);
 
   const handleCartClick = () => {
-    if (isProductInCart(product.id)) onRemove(product.id);
+    const cartItem = cartItems.find((item) => item.product.id === product.id);
+    if (isProductInCart(product.id)) onRemove(cartItem.id);
     else addToCart(product, 1);
   };
 
   const handleWishlistClick = () => {
-    if (isOnWishlist(product.id)) removeFromWishlist(product.id);
+    const wishlistItem = wishlist.find(
+      (item) => item.product.id === product.id
+    );
+    if (isOnWishlist(product.id)) removeFromWishlist(wishlistItem.id);
     else addToWishlist(product);
   };
 
