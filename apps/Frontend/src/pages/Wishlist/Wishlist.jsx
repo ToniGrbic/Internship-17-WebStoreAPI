@@ -9,13 +9,14 @@ import { baseUrl } from "../../constants/constants";
 
 const Wishlist = () => {
   const { wishlist, removeFromWishlist, setWishlist } = useUser();
-  const { addToCart, isProductInCart, onRemove } = useCartContext();
+  const { addToCart, isProductInCart, onRemove, cartItems } = useCartContext();
   const navigate = useNavigate();
 
   const handleCartClick = (e, product) => {
     e.stopPropagation();
     if (isProductInCart(product.id)) {
-      onRemove(product.id);
+      const cartItem = cartItems.find((item) => item.product.id === product.id);
+      onRemove(cartItem.id);
     } else {
       addToCart(product, 1);
     }
