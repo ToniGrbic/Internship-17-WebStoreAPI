@@ -25,7 +25,7 @@ const UserProvider = ({ children }) => {
   const token = cookies.get("token");
 
   const isOnWishlist = (id) => {
-    return wishlist?.some((item) => item.id === id);
+    return wishlist?.some((item) => item.product.id === id);
   };
 
   const addToWishlist = async (product) => {
