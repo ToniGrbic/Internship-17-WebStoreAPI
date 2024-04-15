@@ -74,28 +74,41 @@ const CartProvider = ({ children }) => {
     })();
   }, [user]);
 
-  const addToCart = (product, quantity) => {
-    const ProductInCart = cartItems.find((item) => item.id === product.id);
-    setTotalPrice(
-      (prevTotalPrice) => prevTotalPrice + product.price * quantity
-    );
-    setTotalQuantities((prevTotalQty) => prevTotalQty + quantity);
-
-    if (ProductInCart) {
-      const updatedCartItems = cartItems.map((item) => {
-        if (item.id === product.id)
-          return {
-            ...item,
-            quantity: item.quantity + quantity,
-          };
-        return item;
-      });
-      setCartItems(updatedCartItems);
-    } else {
-      const newItem = { id: uuid(), product: { ...product }, quantity };
-      setCartItems([...cartItems, newItem]);
+  const addToCart = async (product, quantity) => {
+    if (!token) {
+      toast.error("Please login to add items to cart");
+      return;
     }
-    toast.success(`${qty} ${product.title} added to cart`);
+
+    try {
+      const res = await fetch(`${baseUrl}/cart-items`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ productId: product.id, quantity }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Something went wrong, try again later!");
+      }
+      const data = await res.json();
+
+      const newItem = {
+        id: data?.id,
+        product: { ...product },
+        quantity,
+      };
+      toast.success(`${qty} ${product.title} added to cart`);
+      setCartItems([...cartItems, newItem]);
+      setTotalPrice(
+        (prevTotalPrice) => prevTotalPrice + product.price * quantity
+      );
+      setTotalQuantities((prevTotalQty) => prevTotalQty + quantity);
+    } catch (error) {
+      toast.error("Something went wrong, try again later!");
+    }
   };
 
   const toggleCartItemQty = (id, type) => {
