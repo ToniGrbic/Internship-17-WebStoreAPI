@@ -11,8 +11,8 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { setUser } = useUser();
-
   const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email || !password) {
@@ -25,6 +25,7 @@ const Login = () => {
         body: JSON.stringify({ email, password }),
         headers: { "Content-Type": "application/json" },
       });
+      if (!res.ok) throw new Error("Invalid credentials!");
 
       const data = await res.json();
       const cookies = new Cookies();
@@ -37,7 +38,6 @@ const Login = () => {
     } catch (error) {
       toast.error("Invalid credentials!");
     }
-
     setEmail("");
     setPassword("");
   };
@@ -46,7 +46,12 @@ const Login = () => {
     <>
       <h1>Sign in</h1>
       <form className={styles["login-form"]} onSubmit={handleSubmit}>
-        <TextInput placeholder="Email" value={email} setValue={setEmail} />
+        <TextInput
+          placeholder="Email"
+          value={email}
+          setValue={setEmail}
+          type="email"
+        />
         <TextInput
           placeholder="Password"
           value={password}

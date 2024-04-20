@@ -1,9 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router";
+import toast from "react-hot-toast";
 import styles from "../index.module.css";
 import TextInput from "../../../components/Inputs/TextInput";
-import { useNavigate } from "react-router";
 import { baseUrl } from "../../../constants/constants";
-import toast from "react-hot-toast";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -29,15 +29,12 @@ const Register = () => {
         body: JSON.stringify({ name, email, password }),
         headers: { "Content-Type": "application/json" },
       });
-
-      if (!res.ok) {
-        throw new Error("something went wrong, try again later!");
-      }
+      if (!res.ok) throw new Error("something went wrong, try again...");
 
       toast.success("Account created successfully!");
       navigate("/login");
     } catch (error) {
-      toast.error("something went wrong, try again later!");
+      toast.error("something went wrong, try again...");
     }
     setEmail("");
     setPassword("");
@@ -47,7 +44,12 @@ const Register = () => {
     <>
       <h1>Sign up</h1>
       <form className={styles["login-form"]} onSubmit={handleSubmit}>
-        <TextInput placeholder="Email" value={email} setValue={setEmail} />
+        <TextInput
+          placeholder="Email"
+          value={email}
+          setValue={setEmail}
+          type="email"
+        />
         <TextInput placeholder="Username" value={name} setValue={setName} />
         <TextInput
           placeholder="Password"
