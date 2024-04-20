@@ -112,6 +112,10 @@ const CartProvider = ({ children }) => {
   };
 
   const toggleCartItemQty = (id, type) => {
+    if (type !== "inc" && type !== "dec") {
+      throw new Error("Invalid type in toggleCartItemQty");
+    }
+
     foundProduct = cartItems.find((item) => item.id === id);
     index = cartItems.findIndex((product) => product.id === id);
 
