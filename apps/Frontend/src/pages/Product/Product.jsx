@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useCartContext } from "../../providers/CartProvider/CartProvider";
 import { useUser } from "../../providers/UserProvider/UserProvider";
+import useFetchProducts from "../../hooks/useFetchProducts";
 import styles from "./Product.module.css";
 import ProductCard from "../../components/ProductCard";
 
-const Product = ({ products }) => {
+const Product = () => {
   const { state: product } = useLocation();
   const [otherProducts, setOtherProducts] = useState([]);
+  const { products } = useFetchProducts();
 
   const { isProductInCart, onRemove, addToCart, cartItems } = useCartContext();
   const { isOnWishlist, removeFromWishlist, addToWishlist, wishlist } =

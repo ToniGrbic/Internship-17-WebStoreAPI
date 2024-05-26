@@ -10,22 +10,17 @@ import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import Orders from "./pages/Orders";
 import Wishlist from "./pages/Wishlist";
-import useFetchProducts from "./hooks/useFetchProducts";
 import AuthLayout from "./components/Layouts/AuthLayout";
 
 function App() {
   const [search, setSearch] = useState("");
-  const { products } = useFetchProducts();
 
   return (
     <Routes>
       <Route element={<Navigation setSearch={setSearch} />}>
         <Route path="/" element={<HomePage />} />
         <Route path="/products" element={<Products search={search} />} />
-        <Route
-          path="/product/:productId"
-          element={<Product products={products} />}
-        />
+        <Route path="/product/:productId" element={<Product />} />
         <Route path="/orders" element={<Orders />} />
         <Route path="/wishlist" element={<Wishlist />} />
       </Route>
